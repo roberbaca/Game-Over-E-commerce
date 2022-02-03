@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const UserSchema = new Schema({
-    email: { type: String, required: [true, "email required"], unique: true } ,
+    email: { type: String, required: [true, "email required"], unique: true },
     password: { type: String, required: [true, "password required"] },
     age: { type: Number, default: 18 },
-    createdDate: { type: Date, default: new Date()}
+    firstName: { type: String, required: [true, "fisrt name required"] },
+    lastName: { type: String, required: [true, "last name required"] },    
+    createdDate: { type: Date, default: new Date()},
+    enabled: { type: Boolean, default: true}
 });
 
 // Este metodo es para evitar traer algunos campos de la db:
@@ -19,7 +22,5 @@ UserSchema.methods.toJSON = function() {
 }
 
 
-
 const UserModel = mongoose.model('Users', UserSchema);
-
 module.exports = { UserModel };

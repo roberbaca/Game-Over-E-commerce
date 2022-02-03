@@ -1,6 +1,6 @@
 // MERN
 
-// npm init -y
+// npm init -y (generamos el package.json)
 // npm i express
 // npm i cors
 // npm i body-parser
@@ -13,24 +13,31 @@
 
 // EXPRESS / CORS / BODY PARSER / MONGOOSE
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const app = express();
 const PORT = process.env.PORT || 3100; // si el puerto es nulo o undefined, se selecciona el puerto 3100
 const mongoose = require('mongoose');
 
+// conectamos a MongoDB (Atlas)
+const uri = "mongodb+srv://greatgames:goose5313@mydatabase.pzgx9.mongodb.net/myFirstDatabase";
+mongoose.connect(uri).then((resp)=> {
+    console.log("connected to DB");
+});
+
+
 // config routes
-app.use( bodyParser.urlencoded( {extended: false }));
+app.use( bodyParser.urlencoded( {extended: true }));
 app.use( bodyParser.json() );
 app.use( cors() );
 
 
 // Schemas
-const { UserModel } = require('./schemas/User');
+const { UserModel } = require('./Schemas/UserSchema');
 const res = require('express/lib/response');
 
 
-//connect db
+//connect db local
 const connectDB = async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/DataBase');
@@ -41,20 +48,24 @@ const connectDB = async () => {
     }
 }
 
-connectDB();
+//connectDB();
 
 
 //routes
 
-// creamos un usuario:
+// creamos un usuario (Register):
 app.post('/api/register', async (req, res) => {
-    const { email, password, age } = req.body;
-    const created = await new UserModel({ email, password, age }).save();
-
-    res.send(created);
+    try {
+        const { email, password, age, firstName, lastName } = req.body;
+        const created = await new UserModel({ email, password, age, firstName, lastName }).save();    
+        res.send(created);
+    } catch ( error ) {
+        res.send(error);
+    }
 });
 
 
+// sign in un usuario (Login):
 app.post('/api/login', (req, res) => {
 
     try {
@@ -79,10 +90,25 @@ app.post('/api/login', (req, res) => {
 
 // obtenemos todos los usuarios
 app.get('/api/users', async (req, res) => {
-    const users = await UserModel.find();
-    res.send( { users} );
+    try {
+        const users = await UserModel.find();
+        res.send( { data: users} );
+    } catch (error) {
+        res.send(error);
+    }
 })
 
+
+app.get('/api/user/:id', async (req,res) => {
+    try {
+        const { id } = req.params;
+        const user = await UserModel.findOne({_id: id});
+        res.send({ data: user} );
+
+    } catch(error){
+        res.send(error);
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`app running on port ${PORT}`);
