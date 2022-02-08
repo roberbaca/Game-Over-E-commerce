@@ -56,8 +56,9 @@ const connectDB = async () => {
 // creamos un usuario (Register):
 app.post('/api/register', async (req, res) => {
     try {
-        const { email, password, age, firstName, lastName } = req.body;
-        const created = await new UserModel({ email, password, age, firstName, lastName }).save();    
+        //const { email, password, age, firstName, lastName } = req.body;
+        const { firstName, lastName, age, email, password } = req.body;
+        const created = await new UserModel({ firstName, lastName, age, email, password }).save();    
         res.send(created);
     } catch ( error ) {
         res.send(error);
@@ -99,6 +100,7 @@ app.get('/api/users', async (req, res) => {
 })
 
 
+//obtenemos los datos del usuario por id
 app.get('/api/user/:id', async (req,res) => {
     try {
         const { id } = req.params;
@@ -109,6 +111,33 @@ app.get('/api/user/:id', async (req,res) => {
         res.send(error);
     }
 })
+
+
+//borramos un usuario (lo inhabilitamos)
+app.delete('/api/user/:id', async (req,res) => {    
+    try {
+        const { id } = req.params;
+        const deleted = await UserModel.findOneAndUpdate({_id:id}, { enabled: false});
+        res.send(!!deleted);
+
+    } catch (error) {
+        res.send(error);
+    }
+})
+
+
+//habilitamos un usuario:
+app.get('/api/user/enable/:id', async (req,res) => {    
+    try {
+        const { id } = req.params;
+        const enabled = await UserModel.findOneAndUpdate({_id:id}, { enabled: true});
+        res.send(!!enabled);
+
+    } catch (error) {
+        res.send(error);
+    }
+})
+
 
 app.listen(PORT, () => {
     console.log(`app running on port ${PORT}`);

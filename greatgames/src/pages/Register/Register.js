@@ -1,51 +1,41 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
+import { createUser } from '../../services/users.service';
 
 const Register = () => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [age, setAge] = useState(0);
+    const [user, setUser] = useState({});
     const [token, setToken] = useState("");
     const [error, setError] = useState(null);
 
-    const baseURL = 'http://localhost:3100/api'
-
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value);
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
     }
+ 
 
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
-    }
-
-    const handleChangeAge = (e) => {
-        setAge(e.target.value);
-    }
-
-    const handleClick = async (e) => {
+    const onCreate = async (e) => {
 
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${baseURL}/register`, {
-                email,
-                password,
-                age
-            });
+            const response = await createUser({
+               ...user
+            });         
 
+            /*
             const { data, problem } = response.data;
 
             if (problem) {
                 setError(problem.message);
             } else {
-                setToken(data.token);
+                //setToken(data.token);
                 setError(null);
                 console.log("New user created!");
             }
 
             console.log(token);
+
+            */
 
         } catch(error) {
             console.log("error: ", error);
@@ -55,11 +45,15 @@ const Register = () => {
 
     return (
         <div>
-            <form action="">                
-                <input type="email" placeholder='email'onChange={handleChangeEmail} value={email}/>
-                <input type="password" placeholder='password'onChange={handleChangePassword} value={password}/>
-                <input type="number" placeholder='age'onChange={handleChangeAge} value={age}/>
-                <button type='submit' onClick={handleClick}>Register</button>
+            <form action="">      
+                <input type="text" name='firstName' placeholder='First Name'onChange={handleChange}/>
+                <input type="text" name='lastName' placeholder='Last Name'onChange={handleChange}/>   
+                <input type="number" name='age' placeholder='Age'onChange={handleChange}/>       
+                <input type="email" name='email' placeholder='Email'onChange={handleChange}/>
+                <input type="password" name='password' placeholder='Password'onChange={handleChange}/>
+                
+                {/* <button type='submit' onClick={onCreate}>Register</button> */}
+                <button onClick={onCreate}>Register</button>
                 {error ? <p>{error}</p> : <h4>{token}</h4>}
             </form>
         </div>
