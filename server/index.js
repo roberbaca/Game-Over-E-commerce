@@ -6,6 +6,10 @@
 // npm i body-parser
 // npm i mongoose
 
+// npm install -g heroku
+// npm i jsonwebtoken
+// npm i express-validator
+
 // corremos la app con node ./index.js
 // o podemos instalar npm i -g nodemon
 // y hacemos nodemon ./index.js
@@ -36,6 +40,12 @@ app.use( cors() );
 const { UserModel } = require('./Schemas/UserSchema');
 const res = require('express/lib/response');
 
+// JSON web token
+const { generateJWT } = require('./utils/jwt');
+const { jwtValidator } = require('./middlewares/jwt.middleware');
+
+
+
 
 //connect db local
 const connectDB = async () => {
@@ -55,10 +65,11 @@ const connectDB = async () => {
 
 // creamos un usuario (Register):
 app.post('/api/register', async (req, res) => {
-    try {
-        //const { email, password, age, firstName, lastName } = req.body;
+    try {   
         const { firstName, lastName, age, email, password } = req.body;
-        const created = await new UserModel({ firstName, lastName, age, email, password }).save();    
+        const token = await generateJWT({firstName, lastName, email});
+        //console.log('token: ', token);
+        const created = await new UserModel({ firstName, lastName, age, email, password, token }).save();    
         res.send(created);
     } catch ( error ) {
         res.send(error);
@@ -93,7 +104,7 @@ app.post('/api/login', (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         const users = await UserModel.find();
-        res.send( { data: users} );
+        res.send( { data: users } );
     } catch (error) {
         res.send(error);
     }
@@ -137,6 +148,12 @@ app.get('/api/user/enable/:id', async (req,res) => {
         res.send(error);
     }
 })
+
+
+app.get('/api/hola', [jwtValidator], (req, res) => {
+    res.send("Salio todo ok");
+});
+
 
 
 app.listen(PORT, () => {

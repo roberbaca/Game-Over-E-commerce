@@ -8,7 +8,8 @@ const UserSchema = new Schema({
     email: { type: String, required: [true, "email required"], unique: true },
     password: { type: String, required: [true, "password required"] },  
     createdDate: { type: Date, default: new Date()},
-    enabled: { type: Boolean, default: true}
+    enabled: { type: Boolean, default: true},
+    token: {type: String}
 });
 
 // Este metodo es para evitar traer algunos campos de la db:
@@ -24,5 +25,5 @@ UserSchema.methods.toJSON = function() {
 }
 */
 
-const UserModel = mongoose.model('NewUsers', UserSchema);
+const UserModel = mongoose.model('Users', UserSchema);
 module.exports = { UserModel };

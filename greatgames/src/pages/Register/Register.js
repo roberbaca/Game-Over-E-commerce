@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
 import { createUser } from '../../services/users.service';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
     const [user, setUser] = useState({});
     const [token, setToken] = useState("");
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
@@ -20,7 +23,9 @@ const Register = () => {
         try {
             const response = await createUser({
                ...user
-            });         
+            });    
+            
+            navigate('/users');
 
             /*
             const { data, problem } = response.data;
@@ -36,6 +41,7 @@ const Register = () => {
             console.log(token);
 
             */
+
 
         } catch(error) {
             console.log("error: ", error);

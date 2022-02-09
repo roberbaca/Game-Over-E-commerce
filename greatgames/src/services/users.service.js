@@ -14,3 +14,11 @@ export const createUser = ({ firstName, lastName, age, email, password }) => {
 export const getUserById = ({ id }) => {
     return axios.get(`${baseURL}/user/${id}`);
 }
+
+export const enableUser = ({ id }) => {
+    return axios.get(`${baseURL}/user/enable/${id}`);
+}
+
+export const disableUser = ({ id }) => {
+    return axios.delete(`${baseURL}/user/${id}`);
+}
