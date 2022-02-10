@@ -9,6 +9,8 @@
 // npm install -g heroku
 // npm i jsonwebtoken
 // npm i express-validator
+// npm i bcryptjs
+// npm i nodemailer
 
 // corremos la app con node ./index.js
 // o podemos instalar npm i -g nodemon
@@ -42,12 +44,24 @@ const res = require('express/lib/response');
 
 // JSON web token
 const { generateJWT } = require('./utils/jwt');
+
+// Express-validator
 const { jwtValidator } = require('./middlewares/jwt.middleware');
+const { check } = require('express-validator');
+const { validateFields } = require('./middlewares/validateFields.middleware');
+
+//Encriptacion de Contraseñas
+const { encryptPassword, comparePasswords } = require('./utils/bcrypt');
+
+// Automatic confirmation mail sender
+const { mailSender } = require('./utils/mailSender');
+const { application } = require('express');
 
 
 
 
-//connect db local
+//conectamos a la base de datos (local)
+/*
 const connectDB = async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/DataBase');
@@ -58,40 +72,110 @@ const connectDB = async () => {
     }
 }
 
-//connectDB();
+connectDB();
+*/
+
+const dbConnection = async () => {
+
+    try {
+        mongoose.connect( uri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+
+        const db = mongoose.connection;
+
+        db.on( 'error', ( error ) => {
+            console.log( error );
+        });
+
+        db.once( 'open', () => {
+            console.log( 'db open' );
+        });
+
+        console.log( 'db online' );
+    
+    } catch ( error ) {
+        console.log( error );
+        throw new Error( error );
+    }
+};
+
+dbConnection();
+
+
+
 
 
 //routes
 
-// creamos un usuario (Register):
-app.post('/api/register', async (req, res) => {
+/*------------
+    REGISTER
+-------------*/
+
+//creamos un usuario (Register):
+app.post('/api/register', [
+    // validamos los campos:
+    check('email').isEmail().notEmpty(), 
+    check('password').notEmpty(),
+    check('firstName').notEmpty(),
+    check('lastName').notEmpty(),    
+    validateFields 
+], async (req, res) => {
     try {   
         const { firstName, lastName, age, email, password } = req.body;
-        const token = await generateJWT({firstName, lastName, email});
+        const hashedPassword = encryptPassword(password);               // encriptamos la contraseña
+        const token = await generateJWT({firstName, lastName, email});  // generamos el token
+        await mailSender(email, token);
         //console.log('token: ', token);
-        const created = await new UserModel({ firstName, lastName, age, email, password, token }).save();    
-        res.send(created);
+        const user = await new UserModel({ firstName, lastName, age, email, password: hashedPassword, token }).save();    
+        res.send(user);
     } catch ( error ) {
         res.send(error);
     }
 });
 
 
+app.get('/api/activate/:token', async (req, res) => {
+    const { token } = req.params;
+    const user = await UserModel.findOneAndUpdate({ token }, { emailIsVerified: true });
+    res.send('Account activated');
+})
+
+
+/*------------
+    LOGIN
+-------------*/
+
 // sign in un usuario (Login):
-app.post('/api/login', (req, res) => {
+app.post('/api/login', [
+    check('email').notEmpty().isEmail(), 
+    check('password').notEmpty(),
+    validateFields
+], async (req, res) => {
 
     try {
         // const email = req.body.email;
         // const password = req.body.password;    
         // idem a (desestructurando):    
         const { email, password } = req.body;
+        
+        const user = await UserModel.findOne({ email });
+
+        if(user.emailIsVerified)
+        {
+            const isValid = comparePasswords(password, user.password);
+
+            if (isValid){            
+                res.status(202).send({ data: user.token, problem: null }); // obtenemos el token
     
-        if (email === "admin@admin.com" && password === "pass12345") {
-            const token = "sd-adasfdhjsfgosdhgodfg";
-            res.send({ data: { token }, problem: null });
+            } else {          
+                res.status(404).send({ data: null, problem: { message: 'Invalid email or password'} });
+            }  
         } else {
-            res.send({ data: null, problem: { message: "incorrect email or password"} });
+            res.send('Please confirm your email to continue');
         }
+              
 
     } catch (error) {
         console.log("error", error);
@@ -99,6 +183,30 @@ app.post('/api/login', (req, res) => {
 
 });
 
+
+
+/*--------------
+    USER INFO
+---------------*/
+
+//obtenemos los datos del usuario
+app.get('/api/userinfo', [jwtValidator], async(req, res) => {
+    let token = req.header('authorization');
+    token = token?.replace('Bearer ', '');
+    const user = await UserModel.findOne({ token });
+    const { firstName, lastName, age, email} = user;
+    if(user){
+        res.send({firstName, lastName, age, email});
+    }else {
+        res.send('Invalid token');
+    }
+})
+
+
+
+/*-----------------
+    GET ALL USERS
+-------------------*/
 
 // obtenemos todos los usuarios
 app.get('/api/users', async (req, res) => {
@@ -110,6 +218,10 @@ app.get('/api/users', async (req, res) => {
     }
 })
 
+
+/*------------------
+    GET USER BY ID
+-------------------*/
 
 //obtenemos los datos del usuario por id
 app.get('/api/user/:id', async (req,res) => {
@@ -124,6 +236,11 @@ app.get('/api/user/:id', async (req,res) => {
 })
 
 
+
+/*---------------
+    DELETE USER
+----------------*/
+
 //borramos un usuario (lo inhabilitamos)
 app.delete('/api/user/:id', async (req,res) => {    
     try {
@@ -136,6 +253,10 @@ app.delete('/api/user/:id', async (req,res) => {
     }
 })
 
+
+/*----------------
+    ENABLE USER
+-----------------*/
 
 //habilitamos un usuario:
 app.get('/api/user/enable/:id', async (req,res) => {    
@@ -150,6 +271,34 @@ app.get('/api/user/enable/:id', async (req,res) => {
 })
 
 
+/*---------------------------
+    SEND CONFIRMATION MAIL
+----------------------------*/
+
+app.get('/api/send-mail', async (req, res) => {
+    try {
+        const sended = await mailSender();
+        if(sended){
+            res.send('Message sent');
+        } else {
+            res.send('Message NOT sent');
+        }
+
+    } catch (error) {
+        res.send(error);
+    }
+    
+})
+
+
+
+
+
+/*--------------
+    TEST DEBUG
+----------------*/
+
+// para testing
 app.get('/api/hola', [jwtValidator], (req, res) => {
     res.send("Salio todo ok");
 });

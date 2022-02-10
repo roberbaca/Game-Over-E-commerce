@@ -9,7 +9,8 @@ const UserSchema = new Schema({
     password: { type: String, required: [true, "password required"] },  
     createdDate: { type: Date, default: new Date()},
     enabled: { type: Boolean, default: true},
-    token: {type: String}
+    token: {type: String},
+    emailIsVerified: {type: Boolean}
 });
 
 // Este metodo es para evitar traer algunos campos de la db:
