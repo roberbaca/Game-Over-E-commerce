@@ -40,7 +40,9 @@ app.use( cors() );
 
 // Schemas
 const { UserModel } = require('./Schemas/UserSchema');
-const res = require('express/lib/response');
+const { ProductModel } = require("./Schemas/ProductSchema");
+
+// const res = require('express/lib/response');
 
 // JSON web token
 const { generateJWT } = require('./utils/jwt');
@@ -55,7 +57,7 @@ const { encryptPassword, comparePasswords } = require('./utils/bcrypt');
 
 // Automatic confirmation mail sender
 const { mailSender } = require('./utils/mailSender');
-const { application } = require('express');
+// const { application } = require('express');
 
 
 
@@ -102,6 +104,66 @@ const dbConnection = async () => {
 };
 
 dbConnection();
+
+
+// cargamos la DB con los productos
+
+/*
+const productData = require("./data/products");
+
+const importData = async () => {
+    try {
+        await ProductModel.deleteMany({});
+  
+        await ProductModel.insertMany(productData);
+  
+        console.log("Data import success");  
+        process.exit();
+
+    } catch (error) {
+        console.error("Data import error", error);
+        process.exit(1);
+    }
+};
+  
+importData();
+
+https://github.com/LloydJanseVanRensburg/mini-mern-ecommerce-project/blob/master/frontend/src/screens/CartScreen.js
+
+https://www.youtube.com/watch?v=0divhP3pEsg
+
+
+*/
+
+
+/*-------------------
+    CREATE PRODUCT 
+--------------------*/
+
+app.post('/api/create-product', async (req, res) => {
+    try { 
+        const { name, platform, description, genre, price, imageURL } = req.body;   
+        const newProduct = await new ProductModel({ name, platform, description, genre, price, imageURL }).save();    
+        res.send(newProduct);
+    } catch ( error ) {
+        res.send(error);
+    }
+});
+
+
+/*-------------------
+    GET ALL PRODUCTS 
+--------------------*/
+
+// obtenemos todos los productos
+app.get('/api/products', async (req, res) => {
+    try {
+        const products = await ProductModel.find();
+        res.send( { data: products } );
+    } catch (error) {
+        res.send(error);
+    }
+})
 
 
 
