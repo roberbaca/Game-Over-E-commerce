@@ -1,0 +1,144 @@
+/*------------
+      FOOTER
+  -------------*/
+  
+  .site-footer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .site-footer {
+    padding: 1rem 0;
+    font-size: 0.8rem;  
+    font-family: "Roboto", "Open Sans", sans-serif;
+    border-top: 0.1rem solid #424242;
+  }
+  
+  .site-footer a {
+    color: var(--grey);
+    -webkit-transition: .3s ease;
+            transition: .3s ease;
+  }
+  
+  .site-footer a:hover {
+    color: var(--lightBlue);
+    cursor: pointer;
+  }
+  
+  .no-bullet {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .no-bullet li {
+    margin-bottom: 0.6rem;
+  }
+  
+  .no-bullet li a{
+    text-decoration: none;
+  }
+  
+  .widget-title {
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 1rem; 
+  }
+  
+  .widget-container {
+    display: flex;  
+    justify-content: center;
+  }
+  
+  .widget-links {
+    display: flex; 
+    justify-content: space-evenly;
+    width: 50%;
+  }
+  
+  .widget-newsletter {
+    width: 50%;
+    padding-left: 5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .site-footer .newsletter-form input[type="submit"] {
+    width: 20%;
+    border: 0.1rem solid var(--lightBlue);
+    -webkit-transition: .3s ease;
+            transition: .3s ease;
+  }
+  
+  .site-footer .newsletter-form input[type="submit"]:hover, .site-footer .newsletter-form input[type="submit"]:focus {
+    background-color: white;
+    cursor: pointer;
+    border-color: white;
+  }
+  
+  .site-footer .newsletter-form input[type="submit"], .site-footer .newsletter-form input[type="submit"] {
+    background-color: var(--lightBlue);
+    height: 2rem;
+    width: 5rem;
+  }
+  
+  .site-footer .newsletter-form input[type="text"] {  
+    outline: none;
+    border: 0.15rem solid #424242;
+    background-color: transparent;  
+    padding: 0.5rem;
+    color: white;
+    width: 70%;
+    margin-right: 0.3rem;
+    -webkit-transition: .3s ease;
+            transition: .3s ease;          
+  }
+  
+  .site-footer .newsletter-form input[type="text"]:hover, .site-footer .newsletter-form input[type="text"]:focus {
+    border-color: var(--lightBlue);
+  }
+  
+  .copyright-container {
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .copy {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+  }
+  
+  .copy a {
+    color: var(--lightBlue);
+    text-decoration: none;
+    margin-left: 0.5rem; 
+  }
+  
+  .copy a:hover {
+    color: white;
+    cursor: pointer;
+  }
+  
+  .social-links {
+    margin-top: 1rem;
+  }
+  
+  .social-links a{
+    font-size: 2rem;
+    margin-right: 0.5rem;
+    color: var(--lightBlue);
+  }
+  
+  .social-links a:hover{
+    color: white;
+  }
+  

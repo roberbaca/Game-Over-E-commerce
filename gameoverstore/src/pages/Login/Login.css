@@ -1,0 +1,244 @@
+:root {
+    --lightBlue: #1FD4DD;
+    --black:#2b2b2b;
+    --grey: #898e90;
+    --darkGrey: rgba(53,60,76);       
+}
+  
+.fa-trash {
+    pointer-events: none; /* para poder clickear en los iconos de font awesome*/
+}
+
+.site-login {
+    font-family: "Roboto", "Open Sans", sans-serif;
+    background-color: var(--black);  
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 2rem;   
+    padding-right: 2rem;
+    padding-top: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 8rem;
+    margin-bottom: 1rem;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    height: 85vh;
+    width: 30vw;
+    padding: 1rem;
+    padding-top: 2rem;
+    background-color: black;
+    color: white;  
+}
+
+.form-login h1 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+
+.login-email, .login-password {  
+    outline: none;
+    border: 0.1rem solid #424242;
+    background-color: transparent;  
+    color: white;
+    margin: 0;
+    width: 80%;
+    -webkit-transition: .3s ease;
+            transition: .3s ease;   
+    margin-bottom: 0.5rem;     
+    padding: 0.8rem;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */     
+
+}
+
+.login-email:hover, .login-email:focus {
+    border-color: var(--lightBlue);
+}
+
+.login-password:hover, .login-password:focus {
+    border-color: var(--lightBlue);
+}
+
+.login-password {
+    margin-bottom: 1rem;
+}
+
+.rememberme {
+    display: flex;
+    width: 80%;  
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.left {
+    display: flex;
+    justify-content: flex-start;    
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;     
+    width: 50%; 
+    margin: 0;
+    padding: 0;
+}
+
+.check {
+    margin: 0;
+    padding: 0;
+    margin-right: 0.5rem;
+}
+.rememberme a{
+    font-size: 0.8rem;
+    color: white;
+}
+
+.rememberme label {
+    font-size: 0.8rem;
+}
+
+.login-btn {
+    background-color: var(--lightBlue);
+    border-color: var(--lightBlue);
+    border: 0.1rem solid var(--lightBlue);
+    text-decoration: none;
+    color: var(--black);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}  
+  
+.login-btn:hover {
+    cursor: pointer;
+    background-color: white;
+    border-color: white;
+    border: 0.1rem solid white;
+    -webkit-transition: .3s ease;
+            transition: .3s ease;
+}
+
+.privacy {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.register-link {
+    font-size: 0.8rem;
+}
+
+.register-link a {
+    margin-left: 0.5rem;
+    color: white;
+}
+
+
+/* ----------------
+    Media Queries
+------------------*/
+
+
+
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (min-width: 1440px) { 
+
+    .site-login {
+        padding-left: 2rem;   
+        padding-right: 2rem;
+        padding-top: 10rem;
+    }
+    
+    .form-login {
+        height: 50vh;
+        width: 40vw;
+        padding: 1rem;
+        padding-top: 3rem;   
+    }  
+    
+}
+
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (max-width: 1440px) { 
+    
+
+}
+
+
+/* Pantallas grandes (desktops de menos de 1200px) */
+@media (max-width: 1200px) { 
+
+    
+    .site-login {
+        padding-left: 2rem;   
+        padding-right: 2rem;
+        padding-top: 10rem;
+    }
+    
+    .form-login {
+        height: 50vh;
+        width: 50vw;
+        padding: 1rem;
+        padding-top: 3rem;   
+    }  
+
+
+}
+
+
+/* Pantallas medianas (tablets de menos de 992px) */
+@media (max-width: 992px) { 
+}
+
+
+/* Pantallas pequeñas (móviles en landscape de menos de 768px) */
+@media (max-width: 768px) { 
+
+    .site-login {
+        padding-left: 2rem;   
+        padding-right: 2rem;
+        padding-top: 10rem;
+    }
+    
+    .form-login {
+        height: 50vh;
+        width: 70vw;
+        padding: 1rem;
+        padding-top: 3rem;   
+    }  
+
+}
+
+
+/* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
+@media (max-width: 576px) { 
+}
+    
