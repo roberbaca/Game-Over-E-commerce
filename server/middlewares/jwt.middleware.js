@@ -1,8 +1,7 @@
 const { UserModel }  = require("../Schemas/UserSchema");
 
 const jwtValidator = async (req, res, next) => {
-    let token = req.header('authorization');
-    //console.log("El token es: ", token);
+    let token = req.header('authorization');    
     token = token?.replace('Bearer ', '');
     const user = await UserModel.findOne({ token });
     if (user) {

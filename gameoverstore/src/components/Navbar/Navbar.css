@@ -190,20 +190,17 @@
     display: flex;
     align-items: center;
     justify-content: center; 
-  }
-  
-  .menu-item a {
-    text-decoration: none;
+    border: none;
+    background-color: var(--lightBlue);
     color: white;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    font-size: 1rem;
+    font-weight: 500;
+  } 
+
   
-  .menu-item a:hover {
+  .menu-item:hover {
     background-color: white;
+    cursor: pointer;
     color: var(--black);
     -webkit-transition: .3s ease;
             transition: .3s ease;

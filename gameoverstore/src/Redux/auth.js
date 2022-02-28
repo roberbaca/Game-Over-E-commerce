@@ -4,14 +4,16 @@ import axiosInstance from "../utils/axiosInstance";
 // valor inicial
 const defaultValue = {
     token: null,
-    userInfo: {}
+    userInfo: {},
+    error: false,
 }
 
 // ACTION TYPES
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const REGISTER = 'REGISTER';
-const GET_USER_INFO = 'GET_USER_INFO'
+const GET_USER_INFO = 'GET_USER_INFO';
+const ERROR = "ERROR";
 
 
 // REDUCER
@@ -20,6 +22,7 @@ export default function AuthReducer(state = defaultValue, { type, payload }) {
         case LOGIN: return {...state, token: payload };
         case LOGOUT: return defaultValue;
         case GET_USER_INFO: return {...state, userInfo: payload};
+        case ERROR: return { ...state, error: true };
         default: return defaultValue
     }
 }
@@ -36,6 +39,7 @@ export const loginAction = ( {email, password} ) => async dispatch => {
 
     } catch(error) {
         console.log("error: ", error);
+        dispatch({ type: ERROR });
     }      
 }
 
@@ -52,6 +56,7 @@ export const registerAction = ( {firstName, lastName, email, password} ) => asyn
 
     } catch(error) {
         console.log("error: ", error);
+        dispatch({ type: ERROR });
     }      
 }
 
@@ -74,5 +79,6 @@ export const getUserInfoAction = ( {token} ) => async dispatch => {
 
     } catch(error) {
         console.log("error: ", error);
+        dispatch({ type: ERROR });
     }      
 }

@@ -38,7 +38,7 @@
     flex-direction: column;
     align-items: center;
     margin: 0;
-    height: 85vh;
+    height: 60vh;
     width: 30vw;
     padding: 1rem;
     padding-top: 2rem;
@@ -159,6 +159,11 @@
     color: white;
 }
 
+.error-msg {
+    color: red;
+    height: 1rem;
+}
+
 
 /* ----------------
     Media Queries
@@ -177,7 +182,7 @@
     }
     
     .form-login {
-        height: 50vh;
+        height: 60vh;
         width: 40vw;
         padding: 1rem;
         padding-top: 3rem;   
@@ -204,7 +209,7 @@
     }
     
     .form-login {
-        height: 50vh;
+        height: 60vh;
         width: 50vw;
         padding: 1rem;
         padding-top: 3rem;   

@@ -1,10 +1,12 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import AuthReducer from "./auth";
+import FilterReducer from "./filter";
 
 
 const rootReducer = combineReducers({
-    user: AuthReducer,    
+    user: AuthReducer,  
+    filterProducts: FilterReducer,  
 });
 
 

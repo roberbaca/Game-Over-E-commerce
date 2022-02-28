@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
-const { Schema, model } = mongoose;
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
     firstName: { type: String, required: [true, "fisrt name required"] },
-    lastName: { type: String, required: [true, "last name required"] },    
-    age: { type: Number, default: 18 },
+    lastName: { type: String, required: [true, "last name required"] },       
     email: { type: String, required: [true, "email required"], unique: true },
     password: { type: String, required: [true, "password required"] },  
-    createdDate: { type: Date, default: new Date()},
-    enabled: { type: Boolean, default: true},
-    token: {type: String},
-    emailIsVerified: {type: Boolean}
+    createdDate: { type: Date, default: new Date()},    
+    token: {type: String},    
 });
 
 // Este metodo es para evitar traer algunos campos de la db:

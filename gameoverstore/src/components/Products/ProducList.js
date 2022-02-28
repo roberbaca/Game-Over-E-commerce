@@ -54,7 +54,7 @@ const productList = [
   },
 
   {
-    name: "S.T.A.L.K.E.R.: Shadow of Chernobyl",
+    name: "STALKER: Shadow of Chernobyl",
     platform: "PC",
     description: "S.T.A.L.K.E.R.: Shadow of Chernobyl tells a story about survival in the Zone – a very dangerous place, where you fear not only the radiation, anomalies and deadly creatures, but other S.T.A.L.K.E.R.s, who have their own goals and wishes.",
     genre: "RPG",
@@ -86,7 +86,7 @@ const productList = [
     description: "Rayman, Globox, and the Teensies are off wandering through an enchanted forest when they discover a mysterious tent filled with a series of captivating paintings. As they look more closely, they notice each painting seems to tell the story of a mythical world. While focusing on a painting that shows a medieval land, they are suddenly sucked into the painting, entering the world, and the adventure begins. The gang must run, jump, and fight their way through each world to save the day and discover the secrets of every legendary painting.",
     genre: "Platformer",
     price: 39.99,
-    imageURL: "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/r/rayman-legends-definitive-edition-switch/hero?v=2021120501"       
+    imageURL: "https://cdn.akamai.steamstatic.com/steam/apps/242550/header.jpg?t=1617126155"       
   }, 
 
   {
@@ -96,6 +96,15 @@ const productList = [
     genre: "Platformer",
     price: 59.99,
     imageURL: "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/s/super-mario-odyssey-switch/hero?v=2021120301"       
+  }, 
+
+  {
+    name: "Cyberpunk 2077",
+    platform: "PC",
+    description: "Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification",
+    genre: "RPG",
+    price: 1099.50,
+    imageURL: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg?t=1645529390"       
   }, 
 ];
 

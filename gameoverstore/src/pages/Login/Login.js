@@ -3,7 +3,7 @@ import './Login.css'
 import logo from '../../assets/gameOverLogo.png'
 import { Link } from "react-router-dom"
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../Redux/auth';
 
 
@@ -14,6 +14,7 @@ const Login = () => {
  
 
     const dispatch = useDispatch();
+    const error = useSelector(store => store.user.error);
 
     const handleChangePassword = (e) => {
         setPassword(e.target.value);
@@ -45,10 +46,12 @@ const Login = () => {
                     </div>
                     <div className="right">
                         {/* TO DO: FORGOT PASSWORD */}
-                        <a>Forgot Your Password</a>
+                        <a>Forgot Your Password?</a>
                     </div>
                 </div>
                 <button className="login-btn" type='button' onClick={onLogin}>Log in now</button>
+                {error && <p className='error-msg'>Incorrect email adress or password</p>}
+                {!error && <p className='error-msg'></p>}
                 <a className="privacy">Privacy Policy</a>            
                 <p className="register-link">Don´t have a Game Over Account?<Link to ="/register" className='register-link'>Sign Up</Link></p>    
                 

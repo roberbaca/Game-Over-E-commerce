@@ -8,20 +8,15 @@ import { useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom"
 import { getUserInfoAction, logoutAction } from '../../Redux/auth'
+import { filterActionFree, filterActionNintendo, filterActionNoFilter, filterActionPC, filterActionPS, filterActionSearch, filterActionXbox } from '../../Redux/filter'
 import { useDispatch } from 'react-redux'
 
 const Navbar = () => {
-
-    const [searchGame, setSearchGame] = useState("");
-    const [filter, setFilter] = useState("");
+    
     const token = useSelector(store => store.user.token); 
-    const userInfo = useSelector(store => store.user.userInfo); 
-    const dispatch = useDispatch();
+    const userInfo = useSelector(store => store.user.userInfo);     
 
-    const handleChangeInput = (e) => {
-        console.log(e.target.value);
-        setSearchGame(e.target.value);       
-    }
+    const dispatch = useDispatch();  
 
     const getUserInfo = () => {
         dispatch( getUserInfoAction( {token} ));
@@ -31,6 +26,45 @@ const Navbar = () => {
         console.log("logged out");
         dispatch(logoutAction());
     }
+
+    const handleClickFree = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionFree());  
+    }
+
+    const handleClickNintendo = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionNintendo());  
+    }
+
+    const handleClickXbox = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionXbox());  
+    }
+    
+
+    const handleClickPS = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionPS());  
+    }
+    
+
+    const handleClickPC = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionPC());  
+    }
+    
+    const handleClickNofilter = (e) => { 
+        console.log(e.target.value)
+        dispatch(filterActionNoFilter());        
+    }
+
+    const handleChangeSearch = (e) => { 
+        console.log(e.target.value);
+        dispatch(filterActionSearch(e.target.value.toUpperCase()));        
+
+    }
+
 
     useEffect(() => {
         getUserInfo();
@@ -66,15 +100,16 @@ const Navbar = () => {
            
             <ul className="menu">
                
-                <li className="menu-item"><a href="products.html"><i className="fas fa-home"></i></a></li>
-                <li className="menu-item"><a href="products.html">PC</a></li>
-                <li className="menu-item"><a href="products.html">Playstation</a></li>
-                <li className="menu-item"><a href="products.html">Xbox</a></li>
-                <li className="menu-item"><a href="products.html">Nintendo</a></li>
-                <li className="menu-item"><a href="products.html">FREE</a></li>
+                <button className="menu-item" value={"Home"} onClick={handleClickNofilter}><i className="fas fa-home"></i></button>
+                <button className="menu-item" value={"PC"} onClick={handleClickPC}>PC</button>
+                <button className="menu-item" value={"Playstation"} onClick={handleClickPS}>Playstation</button>
+                <button className="menu-item" value={"Xbox"} onClick={handleClickXbox}>Xbox</button>
+                <button className="menu-item" value={"Nintendo"} onClick={handleClickNintendo}>Nintendo</button>
+                <button className="menu-item" value={"Free"} onClick={handleClickFree}>FREE</button>
+      
             </ul> 
             <div className="search-form">
-                <div className="search-input"><input type="text" placeholder="Search PC and Console games..." onChange={handleChangeInput} /></div>
+                <div className="search-input"><input type="text" placeholder="Search PC and Console games..." onChange={handleChangeSearch} /></div>
                 <div className="search-icon"><i className="fas fa-search"></i></div>
             </div> 
         </div>

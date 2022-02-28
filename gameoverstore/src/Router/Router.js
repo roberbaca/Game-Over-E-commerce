@@ -12,7 +12,7 @@ const Router = () => {
     <div>
       <BrowserRouter>
         <Routes>          
-          {token ? PATHS.private.map( r => <Route {...r}/>) : PATHS.noLoggedIn.map( r => <Route {...r}/> )}
+          {token ? PATHS.private.map( (r,index) => <Route {...r} key = {index}/>) : PATHS.noLoggedIn.map( (r,index) => <Route {...r} key = {index}/> )}
           {/* <Route path = "/" element = {<Home/>}></Route> */}
 
           {/* Una vez logueado, nos redirige al HOME */}

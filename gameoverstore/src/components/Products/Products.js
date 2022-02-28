@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import './Products.css'
 import card from '../../assets/card.png'
 import { productList } from './ProducList'
+import { useSelector } from 'react-redux';
 
 const Products = () => {
 
     const [cart, setCart] = useState([{}]);
-    const [filter, setFilter] = useState(null);
+    const filter = useSelector(store => store.filterProducts.filterValue); 
+    const search = useSelector(store => store.filterProducts.searchValue); 
 
     const AddToCart = (e) => {
         console.log(e.target.value);
@@ -36,7 +38,7 @@ const Products = () => {
   return (
 
     <div>
-        {filter === null && 
+        {filter === null && (search === null || search === "") &&
         <section className="featured-deals">
         <h2>Featured Deals</h2>
         <div className="cards-container">
@@ -168,10 +170,9 @@ const Products = () => {
     <section>
         <h2>{filter} Games</h2>
     </section>
-    <div className='product-list'> 
-      
+    <div className='product-list'>       
 
-        {productList.filter(p => filter != null ? p.platform === filter : p.platform != null).map( (p , index) => 
+        {/* {productList.filter(p => filter != null ? p.platform === filter : p.platform != null).map( (p , index) => 
             
         <div className="card" key = {index} >
             <img className = "card-img" src={p.imageURL} alt="game-image"/>
@@ -191,7 +192,54 @@ const Products = () => {
             </div>
             </div>
            
-        )}
+        )} */}
+
+        {productList.filter(p => filter != null ? p.platform === filter : search != null ? p.name.toUpperCase().includes(search) : p.name != null).map( (p , index) => 
+            
+            <div className="card" key = {index} >
+                <div className='card-img-container'>
+                    <img className = "card-img" src={p.imageURL} alt="game-image"/>
+                </div>
+                <div className="card-info">
+                    <div className='card-details'>
+                    <div className="platform">
+                        {p.platform.includes("Playstation") && <i className="fab fa-playstation"></i>}
+                        {p.platform.includes("PC") && <i className="fab fa-steam"></i>}        
+                        {p.platform.includes("Nintendo") && <i className="fas fa-gamepad"></i>}
+                        {p.platform.includes("Xbox") && <i className="fab fa-xbox"></i>}                 
+                    </div> 
+                        <p className="card-price">$ {p.price}</p>
+                    </div>  
+                </div>            
+                <div className="card-cart">
+                    <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                </div>
+                </div>
+               
+            )}
+
+
+        {/* {productList.filter(p => search != null ? p.name.toUpperCase().includes(search) : p.name != null).map( (p , index) => 
+            
+            <div className="card" key = {index} >
+                <img className = "card-img" src={p.imageURL} alt="game-image"/>
+                <div className="card-info">
+                    <div className='card-details'>
+                    <div className="platform">
+                        {p.platform.includes("Playstation") && <i className="fab fa-playstation"></i>}
+                        {p.platform.includes("PC") && <i className="fab fa-steam"></i>}        
+                        {p.platform.includes("Nintendo") && <i className="fas fa-gamepad"></i>}
+                        {p.platform.includes("Xbox") && <i className="fab fa-xbox"></i>}                 
+                    </div> 
+                    <p className="card-price">$ {p.price}</p>
+                </div>  
+                </div>            
+                <div className="card-cart">
+                    <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                </div>
+                </div>
+               
+        )} */}
 
     </div>
 

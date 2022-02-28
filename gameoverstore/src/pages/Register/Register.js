@@ -14,6 +14,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const token = useSelector(store => store.user.token);
+    const error = useSelector(store => store.user.error);
 
 
     const dispatch = useDispatch();
@@ -70,6 +71,8 @@ const Register = () => {
                         <Link className = "register-btn" to ="/login">Login</Link>
                     </div>
                 }
+                 {error && <p className='error-msg'>Something went wrong. User Registration failed.</p>}
+                {!error && <p className='error-msg'></p>}
                 {!token && <a className="privacy">Privacy Policy</a>}
                 {!token && <p className="register-link">Have a Game Over Account?<Link to ="/login" className='register-link'>Sign In</Link></p>}
            

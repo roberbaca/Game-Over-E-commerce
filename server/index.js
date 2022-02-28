@@ -41,6 +41,7 @@ app.use( cors() );
 // Schemas
 const { UserModel } = require('./Schemas/UserSchema');
 const { ProductModel } = require("./Schemas/ProductSchema");
+const { CartModel } = require("./Schemas/CartSchema");
 
 // const res = require('express/lib/response');
 
@@ -56,10 +57,8 @@ const { validateFields } = require('./middlewares/validateFields.middleware');
 const { encryptPassword, comparePasswords } = require('./utils/bcrypt');
 
 // Automatic confirmation mail sender
-const { mailSender } = require('./utils/mailSender');
+//const { mailSender } = require('./utils/mailSender');
 // const { application } = require('express');
-
-
 
 
 //conectamos a la base de datos (local)
@@ -142,8 +141,8 @@ https://www.youtube.com/watch?v=0divhP3pEsg
 
 app.post('/api/create-product', async (req, res) => {
     try { 
-        const { name, platform, description, genre, price, imageURL } = req.body;   
-        const newProduct = await new ProductModel({ name, platform, description, genre, price, imageURL }).save();    
+        const { title, platform, description, genre, price, imageURL } = req.body;   
+        const newProduct = await new ProductModel({ title, platform, description, genre, price, imageURL }).save();    
         res.send(newProduct);
     } catch ( error ) {
         res.send(error);
@@ -166,6 +165,66 @@ app.get('/api/products', async (req, res) => {
 })
 
 
+/*----------------------
+    ADD PRODUCT TO CART
+------------------------*/
+
+// agregamos articulos al carrito
+app.post('/api/add-product-to-cart', async (req, res) => {
+    try {
+        const { userToken, title, platform, description, genre, price, imageURL, quantity } = req.body;
+        const cart = await CartModel.findOne({ userToken });
+        if (cart) {
+            //si existe el carrito para el usuario
+            let itemIndex = cart.products.findIndex(p => p.title == title);
+      
+            if (itemIndex > -1) {
+              //el producto existe en el carrito, actualizamos la cantidad
+              let productItem = cart.products[itemIndex];
+              productItem.quantity = quantity;
+              cart.products[itemIndex] = productItem;
+            } else {
+              //el producto no exixte en el carrito, entonces lo agregamos
+              cart.products.push({ title, platform, description, genre, price, imageURL, quantity });
+            }
+            cart = await cart.save();
+            return res.status(201).send(cart);
+          } else {
+            //no existe carrito, entonces se crea uno
+            const newCart = await new CartModel({
+                userToken,
+                products: [{ title, platform, description, genre, price, imageURL, quantity }]
+            }).save();
+      
+            return res.status(202).send(newCart);
+          }
+        } catch (err) {
+          console.log(err);
+          res.status(404).send("Something went wrong");
+        }
+      });
+
+
+/*----------------
+    GET ALL CART
+------------------*/
+
+// obtenemos todos los carritos
+app.get('/api/carts', async (req, res) => {
+    try {
+        const carts = await CartModel.find();
+        res.send( { data: carts } );
+    } catch (error) {
+        res.send(error);
+    }
+})
+
+
+
+
+
+
+
 
 
 
@@ -177,20 +236,20 @@ app.get('/api/products', async (req, res) => {
 
 //creamos un usuario (Register):
 app.post('/api/register', [
-    // validamos los campos:
-    check('email').isEmail().notEmpty(), 
-    check('password').notEmpty(),
+    //validamos los campos:
     check('firstName').notEmpty(),
-    check('lastName').notEmpty(),    
+    check('lastName').notEmpty(),   
+    check('email').isEmail().notEmpty(), 
+    check('password').notEmpty(),    
     validateFields 
 ], async (req, res) => {
     try {   
-        const { firstName, lastName, age, email, password } = req.body;
+        const { firstName, lastName, email, password } = req.body;
         const hashedPassword = encryptPassword(password);               // encriptamos la contraseña
         const token = await generateJWT({firstName, lastName, email});  // generamos el token
-        await mailSender(email, token);
-        //console.log('token: ', token);
-        const user = await new UserModel({ firstName, lastName, age, email, password: hashedPassword, token }).save();    
+        //await mailSender(email, token);
+        console.log('token: ', token);
+        const user = await new UserModel({ firstName, lastName, email, password: hashedPassword, token }).save();    
         res.send(user);
     } catch ( error ) {
         res.send(error);
@@ -198,11 +257,15 @@ app.post('/api/register', [
 });
 
 
+
+
+/*
 app.get('/api/activate/:token', async (req, res) => {
     const { token } = req.params;
     const user = await UserModel.findOneAndUpdate({ token }, { emailIsVerified: true });
     res.send('Account activated');
 })
+*/
 
 
 /*------------
@@ -222,22 +285,15 @@ app.post('/api/login', [
         // idem a (desestructurando):    
         const { email, password } = req.body;
         
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({ email });        
+        const isValid = comparePasswords(password, user.password);
 
-        if(user.emailIsVerified)
-        {
-            const isValid = comparePasswords(password, user.password);
-
-            if (isValid){            
-                res.status(202).send({ data: user.token, problem: null }); // obtenemos el token
+        if (isValid){            
+            res.status(202).send({ token: user.token, problem: null }); // obtenemos el token
     
-            } else {          
-                res.status(404).send({ data: null, problem: { message: 'Invalid email or password'} });
-            }  
-        } else {
-            res.send('Please confirm your email to continue');
-        }
-              
+        } else {          
+            res.status(404).send({ token: null, problem: { message: 'Invalid email or password'} });
+        }                
 
     } catch (error) {
         console.log("error", error);
@@ -256,9 +312,9 @@ app.get('/api/userinfo', [jwtValidator], async(req, res) => {
     let token = req.header('authorization');
     token = token?.replace('Bearer ', '');
     const user = await UserModel.findOne({ token });
-    const { firstName, lastName, age, email} = user;
+    const { firstName, lastName, email} = user;
     if(user){
-        res.send({firstName, lastName, age, email});
+        res.send({firstName, lastName, email});
     }else {
         res.send('Invalid token');
     }
@@ -304,6 +360,7 @@ app.get('/api/user/:id', async (req,res) => {
 ----------------*/
 
 //borramos un usuario (lo inhabilitamos)
+/*
 app.delete('/api/user/:id', async (req,res) => {    
     try {
         const { id } = req.params;
@@ -314,13 +371,14 @@ app.delete('/api/user/:id', async (req,res) => {
         res.send(error);
     }
 })
-
+*/
 
 /*----------------
     ENABLE USER
 -----------------*/
 
 //habilitamos un usuario:
+/*
 app.get('/api/user/enable/:id', async (req,res) => {    
     try {
         const { id } = req.params;
@@ -331,12 +389,15 @@ app.get('/api/user/enable/:id', async (req,res) => {
         res.send(error);
     }
 })
+*/
+
 
 
 /*---------------------------
     SEND CONFIRMATION MAIL
 ----------------------------*/
 
+/*
 app.get('/api/send-mail', async (req, res) => {
     try {
         const sended = await mailSender();
@@ -352,7 +413,7 @@ app.get('/api/send-mail', async (req, res) => {
     
 })
 
-
+*/
 
 
 
