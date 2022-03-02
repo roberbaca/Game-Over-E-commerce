@@ -104,36 +104,7 @@ const dbConnection = async () => {
 
 dbConnection();
 
-
-// cargamos la DB con los productos
-
-/*
-const productData = require("./data/products");
-
-const importData = async () => {
-    try {
-        await ProductModel.deleteMany({});
-  
-        await ProductModel.insertMany(productData);
-  
-        console.log("Data import success");  
-        process.exit();
-
-    } catch (error) {
-        console.error("Data import error", error);
-        process.exit(1);
-    }
-};
-  
-importData();
-
-https://github.com/LloydJanseVanRensburg/mini-mern-ecommerce-project/blob/master/frontend/src/screens/CartScreen.js
-
-https://www.youtube.com/watch?v=0divhP3pEsg
-
-
-*/
-
+//routes
 
 /*-------------------
     CREATE PRODUCT 
@@ -172,11 +143,11 @@ app.get('/api/products', async (req, res) => {
 // agregamos articulos al carrito
 app.post('/api/add-product-to-cart', async (req, res) => {
     try {
-        const { userToken, title, platform, description, genre, price, imageURL, quantity } = req.body;
+        const { userToken, products: [{ title, platform, description, genre, price, imageURL, quantity }] } = req.body;
         const cart = await CartModel.findOne({ userToken });
         if (cart) {
             //si existe el carrito para el usuario
-            let itemIndex = cart.products.findIndex(p => p.title == title);
+            let itemIndex = cart.products.findIndex(p => p.title === title);
       
             if (itemIndex > -1) {
               //el producto existe en el carrito, actualizamos la cantidad
@@ -220,6 +191,33 @@ app.get('/api/carts', async (req, res) => {
 })
 
 
+/*----------------
+    GET USER CART
+------------------*/
+
+// obtenemos el carrito del usuario
+app.get('/api/user-cart', [jwtValidator], async (req, res) => {
+
+    let token = req.header('authorization');
+    token = token?.replace('Bearer ', '');
+    
+    try {
+        const cartUser = await CartModel.findOne( {userToken: token} );   
+        //const { products } = cartUser;
+    
+        //title,platform, description, genre, price, imageURL, quantity
+        if (cartUser) {            
+            res.send( {cart: cartUser.products} );        
+        }
+        else {
+            res.send('No cart found');
+        }
+
+    } catch(error) {
+        res.send(error);
+    }
+    
+})
 
 
 
@@ -227,8 +225,6 @@ app.get('/api/carts', async (req, res) => {
 
 
 
-
-//routes
 
 /*------------
     REGISTER

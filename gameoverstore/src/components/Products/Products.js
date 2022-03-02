@@ -14,24 +14,13 @@ const Products = () => {
         console.log(e.target.value);
         setCart([...cart, productList[e.target.value]]);
         // Guardar cart en el DB
-    }
-
-
-  // funcion para buscar productos con la barra de busqueda
-    function searchProducts(){
-   
-        //const searchProduct = inputFilter.value.toUpperCase();
-        //const filteredList = productsList.filter(valor=>valor.Name.toUpperCase().includes(searchProduct));
-        //printProductsList(filteredList);
-    }
-
+    } 
 
 
     useEffect(() => {
         // para debug
         console.log(cart);
-    }, [cart])
-    
+    }, [cart]) 
 
 
 
@@ -44,7 +33,7 @@ const Products = () => {
         <div className="cards-container">
             <div className="featured-deals-container">
                 <div className="card-big">
-                    <img className = "card-big-img" src={productList[0].imageURL} alt="game image"/>
+                    <img className = "card-big-img" src={productList[0].imageURL} alt="bigCard"/>
                     <div className="card-big-info">
                         <div className="card-big-price-container">
                             <p className="card-big-discount">-37%</p>
@@ -69,7 +58,7 @@ const Products = () => {
                    
                     <div className="card-small-row">
                         <div className="card-small1">
-                            <img className = "card-small-img" src={productList[1].imageURL} alt="card image"/>
+                            <img className = "card-small-img" src={productList[1].imageURL} alt="smallCard"/>
                             <div className="card-small-info">
                                 
                                 <div className="card-small-price-container">
@@ -92,7 +81,7 @@ const Products = () => {
                        </div>
         
                         <div className="card-small2">
-                            <img className = "card-small-img" src={productList[2].imageURL} alt="card-image"/>
+                            <img className = "card-small-img" src={productList[2].imageURL} alt="smallCard"/>
                             <div className="card-small-info">
                                 <div className="card-small-price-container">
                                     <p className="card-small-discount">-37%</p>
@@ -117,7 +106,7 @@ const Products = () => {
                
                     <div className="card-small-row">
                         <div className="card-small3">
-                            <img className = "card-small-img" src={productList[3].imageURL} alt="card-image"/>
+                            <img className = "card-small-img" src={productList[3].imageURL} alt="smallCard"/>
                             <div className="card-small-info">
                                 <div className="card-small-price-container">
                                     <p className="card-small-discount">-37%</p>
@@ -139,7 +128,7 @@ const Products = () => {
                         </div>
         
                         <div className="card-small4">
-                            <img className = "card-small-img" src={productList[4].imageURL} alt="card-image"/>
+                            <img className = "card-small-img" src={productList[4].imageURL} alt="smallCard"/>
                             <div className="card-small-info">
                                 <div className="card-small-price-container">
                                     <p className="card-small-discount">-37%</p>
@@ -172,33 +161,11 @@ const Products = () => {
     </section>
     <div className='product-list'>       
 
-        {/* {productList.filter(p => filter != null ? p.platform === filter : p.platform != null).map( (p , index) => 
-            
-        <div className="card" key = {index} >
-            <img className = "card-img" src={p.imageURL} alt="game-image"/>
-            <div className="card-info">
-                <div className='card-details'>
-                <div className="platform">
-                    {p.platform.includes("Playstation") && <i className="fab fa-playstation"></i>}
-                    {p.platform.includes("PC") && <i className="fab fa-steam"></i>}        
-                    {p.platform.includes("Nintendo") && <i className="fas fa-gamepad"></i>}
-                    {p.platform.includes("Xbox") && <i className="fab fa-xbox"></i>}                 
-                </div> 
-                <p className="card-price">$ {p.price}</p>
-            </div>  
-            </div>            
-            <div className="card-cart">
-                <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
-            </div>
-            </div>
-           
-        )} */}
-
         {productList.filter(p => filter != null ? p.platform === filter : search != null ? p.name.toUpperCase().includes(search) : p.name != null).map( (p , index) => 
             
             <div className="card" key = {index} >
                 <div className='card-img-container'>
-                    <img className = "card-img" src={p.imageURL} alt="game-image"/>
+                    <img className = "card-img" src={p.imageURL} alt="gameCard"/>
                 </div>
                 <div className="card-info">
                     <div className='card-details'>
@@ -214,32 +181,8 @@ const Products = () => {
                 <div className="card-cart">
                     <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
                 </div>
-                </div>
-               
-            )}
-
-
-        {/* {productList.filter(p => search != null ? p.name.toUpperCase().includes(search) : p.name != null).map( (p , index) => 
-            
-            <div className="card" key = {index} >
-                <img className = "card-img" src={p.imageURL} alt="game-image"/>
-                <div className="card-info">
-                    <div className='card-details'>
-                    <div className="platform">
-                        {p.platform.includes("Playstation") && <i className="fab fa-playstation"></i>}
-                        {p.platform.includes("PC") && <i className="fab fa-steam"></i>}        
-                        {p.platform.includes("Nintendo") && <i className="fas fa-gamepad"></i>}
-                        {p.platform.includes("Xbox") && <i className="fab fa-xbox"></i>}                 
-                    </div> 
-                    <p className="card-price">$ {p.price}</p>
-                </div>  
-                </div>            
-                <div className="card-cart">
-                    <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
-                </div>
-                </div>
-               
-        )} */}
+                </div>               
+            )}       
 
     </div>
 
