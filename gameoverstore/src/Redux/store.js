@@ -6,7 +6,7 @@ import FilterReducer from "./filter";
 
 const rootReducer = combineReducers({
     user: AuthReducer,  
-    filterProducts: FilterReducer,  
+    filterProducts: FilterReducer,    
 });
 
 

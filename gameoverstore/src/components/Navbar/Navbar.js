@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './Navbar.css'
 import logo from '../../assets/gameOverLogo2.png'
-import card from '../../assets/card.png'
-import coverImg from '../../assets/coverImg.jpg'
-import Products from '../Products/Products'
+// import card from '../../assets/card.png'
+// import coverImg from '../../assets/coverImg.jpg'
+// import Products from '../Products/Products'
 import { useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom"
@@ -66,6 +66,15 @@ const Navbar = () => {
     }
 
 
+    const handleCart = () => {
+        if(localStorage.getItem('cartList' + token) !== null && token !== null ){
+            const cartList = JSON.parse(window.localStorage.getItem('cartList' + token));
+            console.log("El carrito es: ", cartList)
+        } else {
+            console.log("Please login with your Game Over account to view your cart");
+        }
+    }
+
     useEffect(() => {
         getUserInfo();
     }, [token])
@@ -90,7 +99,7 @@ const Navbar = () => {
             {!token && <Link to ="/login" className='login-button'><i className="fas fa-user"></i>LOGIN</Link>}
             {token &&  <p className='user'>Welcome,<span>{userInfo.firstName}</span></p>} 
             {token && <Link to ="/" className='login-button' onClick={onLogout}><i className="fas fa-user"></i>LOG OUT</Link>}
-            <Link to ="/cart" className='cart-button'><i className="fas fa-shopping-cart"></i>CART (17)</Link>            
+            <Link to ="/cart" className='cart-button' onClick={handleCart}><i className="fas fa-shopping-cart"></i>CART (17)</Link>            
         </div>                   
     </section>                   
             

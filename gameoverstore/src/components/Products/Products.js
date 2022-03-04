@@ -4,23 +4,42 @@ import card from '../../assets/card.png'
 import { productList } from './ProducList'
 import { useSelector } from 'react-redux';
 
+
 const Products = () => {
-
-    const [cart, setCart] = useState([{}]);
+      
+    let cart = []; // carrito de compras
     const filter = useSelector(store => store.filterProducts.filterValue); 
-    const search = useSelector(store => store.filterProducts.searchValue); 
+    const search = useSelector(store => store.filterProducts.searchValue);     
+    const token = useSelector(store => store.user.token);  
 
+
+    // cargamos el carrito del Local Storage    
+    const loadCart = () => {
+        if(localStorage.getItem('cartList' + token) !== null && token !== null ){
+            cart = JSON.parse(window.localStorage.getItem('cartList' + token));
+            console.log("El carrito es: ", cart)
+        } else {
+            console.log("No cart found");
+        }
+    }   
+  
+
+    // agregamos un nuevo item al carrito y lo guardamos en el local Storage
+    // cada carrito queda linkeado al usuario a traves del token
     const AddToCart = (e) => {
-        console.log(e.target.value);
-        setCart([...cart, productList[e.target.value]]);
-        // Guardar cart en el DB
+
+        console.log(e.target.value); // debug index
+        if(token !== null ){
+            window.localStorage.setItem('cartList' + token, JSON.stringify([...cart, productList[e.target.value]]));            
+        } else {
+            console.log("Please login with your Game Over account to view your cart");
+        }       
     } 
 
-
-    useEffect(() => {
-        // para debug
-        console.log(cart);
-    }, [cart]) 
+    
+    useEffect(() => {        
+        loadCart();        
+    }, []) 
 
 
 
@@ -179,7 +198,7 @@ const Products = () => {
                     </div>  
                 </div>            
                 <div className="card-cart">
-                    <button className="addToCart-btn" onClick={AddToCart}  value={index + 5}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                    <button className="addToCart-btn" onClick={AddToCart}  value={index}><i className="fas fa-cart-plus"></i>Add to cart</button>
                 </div>
                 </div>               
             )}       
