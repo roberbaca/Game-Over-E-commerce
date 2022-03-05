@@ -1,92 +1,75 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './Navbar.css'
 import logo from '../../assets/gameOverLogo2.png'
-// import card from '../../assets/card.png'
-// import coverImg from '../../assets/coverImg.jpg'
-// import Products from '../Products/Products'
 import { useSelector } from 'react-redux'
-
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { getUserInfoAction, logoutAction } from '../../Redux/auth'
-import { filterActionFree, filterActionNintendo, filterActionNoFilter, filterActionPC, filterActionPS, filterActionSearch, filterActionXbox } from '../../Redux/filter'
+import { filterActionNintendo, filterActionNoFilter, filterActionPC, filterActionPS, filterActionSearch, filterActionXbox } from '../../Redux/filter'
 import { useDispatch } from 'react-redux'
 
 const Navbar = () => {
     
     const token = useSelector(store => store.user.token); 
     const userInfo = useSelector(store => store.user.userInfo);     
+    const navigate = useNavigate();    
+    const dispatch = useDispatch();     
 
-    const dispatch = useDispatch();  
-
-    const getUserInfo = () => {
-        dispatch( getUserInfoAction( {token} ));
+    const handleChangeSearch = (e) => {         
+        dispatch(filterActionSearch(e.target.value.toUpperCase()));     
     }
 
-    const onLogout = () => {
-        console.log("logged out");
+    const handleClick = (e) => {
+  
+        switch(e.target.value){
+            case "Home":
+                dispatch(filterActionNoFilter());        
+                break;
+            case "PC":
+                dispatch(filterActionPC());  
+                break;
+            case "Nintendo":
+                dispatch(filterActionNintendo());  
+                break;
+            case "Xbox":
+                dispatch(filterActionXbox());  
+                break;
+            case "Playstation":
+                dispatch(filterActionPS());  
+                break;
+            default:
+                break
+        }
+    }
+
+    const onLogout = () => {       
         dispatch(logoutAction());
-    }
+    }  
 
-    const handleClickFree = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionFree());  
-    }
-
-    const handleClickNintendo = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionNintendo());  
-    }
-
-    const handleClickXbox = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionXbox());  
-    }
-    
-
-    const handleClickPS = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionPS());  
-    }
-    
-
-    const handleClickPC = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionPC());  
-    }
-    
-    const handleClickNofilter = (e) => { 
-        console.log(e.target.value)
-        dispatch(filterActionNoFilter());        
-    }
-
-    const handleChangeSearch = (e) => { 
-        console.log(e.target.value);
-        dispatch(filterActionSearch(e.target.value.toUpperCase()));        
-
-    }
-
+    const onLogin = () => {
+        navigate('/login');
+    }  
 
     const handleCart = () => {
         if(localStorage.getItem('cartList' + token) !== null && token !== null ){
             const cartList = JSON.parse(window.localStorage.getItem('cartList' + token));
-            console.log("El carrito es: ", cartList)
+            console.log("El carrito es: ", cartList);
+            navigate('/cart');
+
         } else {
-            console.log("Please login with your Game Over account to view your cart");
+            navigate('/login');            
         }
     }
 
     useEffect(() => {
-        getUserInfo();
+        dispatch( getUserInfoAction( {token} ));
     }, [token])
 
 
   return (
-    <div className='header-navbar'>
-        
+    <div className='header-navbar'>        
         
        <section className="site-header">
-        <div className="logo-container">
-            {/* <img src="./assets/gameOverLogo2.png" alt="" class="logo"/> */}
+        <div className="logo-container">         
             <img src= {logo} alt="" className="logo"/>
             
             <div className="logo-text">
@@ -95,11 +78,13 @@ const Navbar = () => {
             </div>
         </div>
 
-        <div className="login-section">                   
-            {!token && <Link to ="/login" className='login-button'><i className="fas fa-user"></i>LOGIN</Link>}
-            {token &&  <p className='user'>Welcome,<span>{userInfo.firstName}</span></p>} 
-            {token && <Link to ="/" className='login-button' onClick={onLogout}><i className="fas fa-user"></i>LOG OUT</Link>}
-            <Link to ="/cart" className='cart-button' onClick={handleCart}><i className="fas fa-shopping-cart"></i>CART (17)</Link>            
+        <div className="login-section">             
+            
+            {!token && <button className='login-button' onClick={onLogin}><i className="fas fa-user"></i>LOGIN</button>}
+            {token &&  <p className='user'>Welcome,<span>{userInfo.firstName}</span></p>}             
+            {token && <button className='login-button' onClick={onLogout}><i className="fas fa-user"></i>LOG OUT</button>}
+            <button className='cart-button' onClick={handleCart}><i className="fas fa-shopping-cart"></i>CART (17)</button>
+            
         </div>                   
     </section>                   
             
@@ -107,15 +92,12 @@ const Navbar = () => {
     <section className="site-navbar">
         <div className="main-navigation">
            
-            <ul className="menu">
-               
-                <button className="menu-item" value={"Home"} onClick={handleClickNofilter}><i className="fas fa-home"></i></button>
-                <button className="menu-item" value={"PC"} onClick={handleClickPC}>PC</button>
-                <button className="menu-item" value={"Playstation"} onClick={handleClickPS}>Playstation</button>
-                <button className="menu-item" value={"Xbox"} onClick={handleClickXbox}>Xbox</button>
-                <button className="menu-item" value={"Nintendo"} onClick={handleClickNintendo}>Nintendo</button>
-                <button className="menu-item" value={"Free"} onClick={handleClickFree}>FREE</button>
-      
+            <ul className="menu">        
+                <button className="menu-item" value={"Home"} onClick={handleClick}><i className="fas fa-home"></i></button>
+                <button className="menu-item" value={"PC"} onClick={handleClick}>PC</button>
+                <button className="menu-item" value={"Playstation"} onClick={handleClick}>Playstation</button>
+                <button className="menu-item" value={"Xbox"} onClick={handleClick}>Xbox</button>
+                <button className="menu-item" value={"Nintendo"} onClick={handleClick}>Nintendo</button>         
             </ul> 
             <div className="search-form">
                 <div className="search-input"><input type="text" placeholder="Search PC and Console games..." onChange={handleChangeSearch} /></div>

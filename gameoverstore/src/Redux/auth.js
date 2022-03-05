@@ -31,8 +31,7 @@ export default function AuthReducer(state = defaultValue, { type, payload }) {
 export const loginAction = ( {email, password} ) => async dispatch => {
     try {
         const response = await axiosInstance.post('/login', { email, password });  // llamada al back y obtenemos el token       
-        const token = response.data.token;
-        //console.log(response);
+        const token = response.data.token;      
         console.log(token);
         dispatch({ type: LOGIN, payload: token });
         

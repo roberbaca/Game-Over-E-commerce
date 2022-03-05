@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './Products.css'
-import card from '../../assets/card.png'
-import { productList } from './ProducList'
+import { productList } from '../../Data/ProducList'
 import { useSelector } from 'react-redux';
 
 
@@ -15,8 +14,9 @@ const Products = () => {
 
     // cargamos el carrito del Local Storage    
     const loadCart = () => {
+
         if(localStorage.getItem('cartList' + token) !== null && token !== null ){
-            cart = JSON.parse(window.localStorage.getItem('cartList' + token));
+            cart = JSON.parse(window.localStorage.getItem('cartList' + token));            
             console.log("El carrito es: ", cart)
         } else {
             console.log("No cart found");
@@ -28,12 +28,15 @@ const Products = () => {
     // cada carrito queda linkeado al usuario a traves del token
     const AddToCart = (e) => {
 
-        console.log(e.target.value); // debug index
-        if(token !== null ){
-            window.localStorage.setItem('cartList' + token, JSON.stringify([...cart, productList[e.target.value]]));            
+        cart = [...cart, productList[e.target.value]];
+        console.log(e.target.value); // debug index        
+        console.log(cart); // debug cart
+
+        if(token !== null ){            
+            window.localStorage.setItem('cartList' + token, JSON.stringify(cart));            
         } else {
             console.log("Please login with your Game Over account to view your cart");
-        }       
+        }              
     } 
 
     
@@ -69,7 +72,7 @@ const Products = () => {
                         </div>                    
                     </div>
                     <div className="card-big-cart">
-                        <button className="addToCart-btn-big" onClick={AddToCart}  value={0}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                        <button className="addToCart-btn-big" onClick={AddToCart}  value="0"><i className="fas fa-cart-plus"></i>Add to cart</button>
                     </div>
                 </div>
     
@@ -95,7 +98,7 @@ const Products = () => {
                                 </div>                    
                             </div>
                             <div className="card-small-cart">
-                                <button className="addToCart-btn-small" onClick={AddToCart}  value={1}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                                <button className="addToCart-btn-small" onClick={AddToCart}  value="1"><i className="fas fa-cart-plus"></i>Add to cart</button>
                             </div>
                        </div>
         
@@ -117,7 +120,7 @@ const Products = () => {
                                 </div>                    
                             </div>
                             <div className="card-small-cart">
-                                <button className="addToCart-btn-small" onClick={AddToCart}  value={2}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                                <button className="addToCart-btn-small" onClick={AddToCart}  value="2"><i className="fas fa-cart-plus"></i>Add to cart</button>
                             </div>
                         </div>
                     </div>
@@ -142,7 +145,7 @@ const Products = () => {
                                 </div>                    
                             </div>
                             <div className="card-small-cart">
-                                <button className="addToCart-btn-small" onClick={AddToCart}  value={3}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                                <button className="addToCart-btn-small" onClick={AddToCart}  value="3"><i className="fas fa-cart-plus"></i>Add to cart</button>
                             </div>
                         </div>
         
@@ -164,7 +167,7 @@ const Products = () => {
                                 </div>                    
                             </div>
                             <div className="card-small-cart">
-                                <button className="addToCart-btn-small" onClick={AddToCart}  value={4}><i className="fas fa-cart-plus"></i>Add to cart</button>
+                                <button className="addToCart-btn-small" onClick={AddToCart}  value= "4" ><i className="fas fa-cart-plus"></i>Add to cart</button>
                             </div>
                          </div> 
                     </div>                  
@@ -194,7 +197,7 @@ const Products = () => {
                         {p.platform.includes("Nintendo") && <i className="fas fa-gamepad"></i>}
                         {p.platform.includes("Xbox") && <i className="fab fa-xbox"></i>}                 
                     </div> 
-                        <p className="card-price">$ {p.price}</p>
+                        <p className="card-price">$ { (Math.round( p.price *100 ) /100).toFixed(2) }</p>
                     </div>  
                 </div>            
                 <div className="card-cart">

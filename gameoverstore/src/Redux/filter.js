@@ -1,5 +1,5 @@
 // valor inicial
-const defaultValue = {
+const initialValue = {
     filterValue : null,
     searchValue: null,
 }
@@ -10,14 +10,15 @@ const SEARCH = 'SEARCH';
 
 
 // REDUCER
-export default function FilterReducer(state = defaultValue, { type, payload }) {
+export default function FilterReducer(state = initialValue, { type, payload }) {
     switch(type) {
         case FILTER: return {...state, filterValue: payload };  
         case SEARCH: return {...state, searchValue: payload };                
-        default: return defaultValue
+        default: return initialValue
     }
 }
 
+// ACTIONS
 export const filterActionNoFilter = () => dispatch => {    
     const filterValue = null;
     dispatch({ type: FILTER, payload: filterValue });
@@ -27,7 +28,6 @@ export const filterActionPC = () => dispatch => {
     const filterValue = "PC"; 
     dispatch({ type: FILTER, payload: filterValue });  
 }
-
 
 export const filterActionPS = () => dispatch => {   
     const filterValue = "Playstation"; 
@@ -41,12 +41,6 @@ export const filterActionXbox = () => dispatch => {
 
 export const filterActionNintendo = () => dispatch => {   
     const filterValue = "Nintendo"; 
-    dispatch({ type: FILTER, payload: filterValue });  
-}
-
-
-export const filterActionFree = () => dispatch => {   
-    const filterValue = "Free"; 
     dispatch({ type: FILTER, payload: filterValue });  
 }
 

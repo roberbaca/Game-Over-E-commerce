@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Home from '../pages/Home/Home'
 import { PATHS } from './paths'
 import { useSelector } from 'react-redux'
 
@@ -13,6 +12,8 @@ const Router = () => {
       <BrowserRouter>
         <Routes>          
           {token ? PATHS.private.map( (r,index) => <Route {...r} key = {index}/>) : PATHS.noLoggedIn.map( (r,index) => <Route {...r} key = {index}/> )}
+          {/* {PATHS.paths.map( (r,index) => <Route {...r} key = {index}/>) } */}
+          
           {/* <Route path = "/" element = {<Home/>}></Route> */}
 
           {/* Una vez logueado, nos redirige al HOME */}
