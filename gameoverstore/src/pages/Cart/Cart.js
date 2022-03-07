@@ -12,26 +12,23 @@ const Cart = () => {
 
     // cargamos el carrito del Local Storage    
     const loadCart = () => {
-
         if(localStorage.getItem('cartList' + token) !== null && token !== null ){            
             setUserCart(JSON.parse(window.localStorage.getItem('cartList' + token)));                     
-            console.log("The cart is: ", userCart)
+            //console.log("The cart is: ", userCart)
             
         } else {
-            console.log("No cart found");
+            //console.log("No cart found");
         }
     }   
 
     // guardamos el carrito en el Local Storage    
     const saveCart = () => {
-
         window.localStorage.setItem('cartList' + token, JSON.stringify(userCart));  
     }
 
     // sumamos el total a pagar
-    const sumTotal = () => {
-        
-        let total = 0;      
+    const sumTotal = () => {        
+        let total = 0;     
 
         for (let i = 0; i < userCart.length; i++) {            
             total += userCart[i].price;
@@ -42,14 +39,13 @@ const Cart = () => {
 
     // Usamos el metodo de arrays Splice, pasamos por parametro el indice donde comenzamos a borrar 
     // elementos y la cantidad de elementos a eliminar        
-    const deleteItem = (e) => {         
-          
+    const deleteItem = (e) => {             
         userCart.splice(e.target.value, 1);
         setUserCart([...userCart]);
-        console.log("new cart", userCart);                     
+        //console.log("new cart", userCart);                     
     }
 
-
+    // Al tocar el boton de checkout, limpiamos el carrito de compras, y se muestra un msj de confirmacion en pantalla
     const handleCheckout = () => {
         setUserCart([]);
         setPurchased(true);
@@ -115,11 +111,7 @@ const Cart = () => {
                 </div>
             </div> 
 
-
         </div>   
-
-    
-
     </div>
   )
 }

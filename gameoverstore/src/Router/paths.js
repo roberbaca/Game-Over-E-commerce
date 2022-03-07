@@ -46,33 +46,5 @@ export const PATHS = {
             element: <Home/>
         },
 
-    ],
-
-    // paths: [
-    //     {
-    //         path: '/login',            
-    //         element: <Login/>
-    //     },
-
-    //     {
-    //         path: '/register',        
-    //         element: <Register/>
-    //     },
-
-    //     {
-    //         path: '/home',           
-    //         element: <Home/>
-    //     },
-
-    //     {
-    //         path: '/cart',            
-    //         element: <Cart/>
-    //     },
-
-    //     {
-    //         path: '*',           
-    //         element: <Home/>
-    //     },
-
-    // ]
+    ],    
 }

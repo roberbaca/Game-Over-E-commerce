@@ -10,18 +10,5 @@ const UserSchema = new Schema({
     token: {type: String},    
 });
 
-// Este metodo es para evitar traer algunos campos de la db:
-
-/*
-UserSchema.methods.toJSON = function() {
-    //Estos son los campos que evitamos:
-    const { __V, password, _id, ...user } = this.toObject();
-
-    // esto si lo trae la db:
-    user.id = _id;
-    return user;
-}
-*/
-
 const UserModel = mongoose.model('Users', UserSchema);
 module.exports = { UserModel };

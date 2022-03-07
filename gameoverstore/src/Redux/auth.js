@@ -1,10 +1,10 @@
 import axiosInstance from "../utils/axiosInstance";
 
-
 // valor inicial
 const defaultValue = {
     token: null,
     userInfo: {},
+    registered: false,      
     error: false,
 }
 
@@ -23,7 +23,7 @@ export default function AuthReducer(state = defaultValue, { type, payload }) {
         case LOGOUT: return defaultValue;
         case GET_USER_INFO: return {...state, userInfo: payload};
         case ERROR: return { ...state, error: true };
-        default: return defaultValue
+        default: return state;
     }
 }
 
@@ -32,6 +32,9 @@ export const loginAction = ( {email, password} ) => async dispatch => {
     try {
         const response = await axiosInstance.post('/login', { email, password });  // llamada al back y obtenemos el token       
         const token = response.data.token;      
+        
+        window.localStorage.setItem("token", JSON.stringify(token));
+        
         console.log(token);
         dispatch({ type: LOGIN, payload: token });
         
@@ -51,7 +54,8 @@ export const registerAction = ( {firstName, lastName, email, password} ) => asyn
     try {
         const response = await axiosInstance.post('/register', { firstName, lastName, email, password });              
         console.log("register succesful: ");
-        dispatch({ type: REGISTER });        
+        const registered = true;
+        dispatch({ type: REGISTER, payload: registered });        
 
     } catch(error) {
         console.log("error: ", error);
@@ -61,23 +65,27 @@ export const registerAction = ( {firstName, lastName, email, password} ) => asyn
 
 export const getUserInfoAction = ( {token} ) => async dispatch => {
     try {
-        const response = await axiosInstance.get('/userinfo', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });     
         
-        const userInfo = {
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            email: response.data.email
+        if (token) {
+            const response = await axiosInstance.get('/userinfo', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });     
+            
+            const userInfo = {
+                firstName: response.data.firstName,
+                lastName: response.data.lastName,
+                email: response.data.email
+            }
+    
+            console.log(response.data);
+            dispatch({ type: GET_USER_INFO, payload: userInfo });        
         }
-
-        console.log(response.data);
-        dispatch({ type: GET_USER_INFO, payload: userInfo });        
 
     } catch(error) {
         console.log("error: ", error);
         dispatch({ type: ERROR });
     }      
 }
+

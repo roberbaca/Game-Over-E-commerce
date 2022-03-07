@@ -273,14 +273,83 @@
        COVER
   -------------*/
   
-  .site-cover {
+  /* .site-cover {
     background-color: var(--black);
     margin-bottom: 4rem;
   }
   
   .site-cover img {
     width: 100%;
+  } */
+  
+/* ----------------
+    Media Queries
+------------------*/
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (min-width: 1440px) { 
+
+ 
+  
+}
+
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (max-width: 1440px) { 
+  
+
+}
+
+/* Pantallas grandes (desktops de menos de 1200px) */
+@media (max-width: 1200px) { 
+  
+   .login-button {
+    font-size: 1rem;
+    width: 30%;
+    height: 60%;  
+  }
+ 
+  .cart-button {
+    font-size: 1rem;
+    margin-left: 1rem;
+    width: 30%;
+    height: 60%;
+  }
+}
+
+
+/* Pantallas medianas (tablets de menos de 992px) */
+@media (max-width: 992px) { 
+
+}
+
+
+/* Pantallas pequeñas (móviles en landscape de menos de 768px) */
+@media (max-width: 768px) { 
+  
+  .logo-container img{
+    width: 6rem;
+    margin-right: 1rem;
+  }
+
+  .login-button {
+    font-size: 0.8rem;
+    width: 40%;
+    height: 80%;  
+  }
+ 
+  .cart-button {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+    width: 40%;
+    height: 80%;
   }
   
-  
+}
+
+
+/* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
+@media (max-width: 576px) { 
+
+}
   

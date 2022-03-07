@@ -2,7 +2,7 @@ import React from 'react'
 import './Register.css'
 import logo from '../../assets/gameOverLogo.png'
 import { Link } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction, registerAction } from '../../Redux/auth'
 
@@ -12,10 +12,9 @@ const Register = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const token = useSelector(store => store.user.token);
+    const [regState, setRegState] = useState(false);
+    const [registered, setRegistered] = useState(false);
     const error = useSelector(store => store.user.error);
-
 
     const dispatch = useDispatch();
 
@@ -36,8 +35,11 @@ const Register = () => {
     }   
 
     const onRegister = () => {
-        dispatch( registerAction( {firstName, lastName, email, password} ));      
+        dispatch( registerAction( {firstName, lastName, email, password} ));
+        setRegistered(true);
+        setRegState(!error);        
     }
+
 
 
   return (
@@ -47,7 +49,7 @@ const Register = () => {
                 <div className="logo">
                     <img src={logo} alt="logo" className="logo-img"/>               
                 </div>
-                {!token && 
+                {!regState && 
                 <div className='form-container'>
                     <h1>Sign Up</h1>
                     <div className="input-names">
@@ -62,7 +64,7 @@ const Register = () => {
                     <input type="password" className="input-password" placeholder="Password" value={password} onChange={handleChangePassword}/>
                     <button className="register-btn" type='button' onClick={onRegister}>Register</button>
                 </div>}
-                {token && 
+                {regState && 
                     <div className='register-success-container'>
                         <div className='register-success-msg'>
                             <p>You have signed up succesfully !</p>
@@ -71,10 +73,10 @@ const Register = () => {
                         <Link className = "register-btn" to ="/login">Login</Link>
                     </div>
                 }
-                 {error && <p className='error-msg'>Something went wrong. User Registration failed.</p>}
-                {!error && <p className='error-msg'></p>}
-                {!token && <a className="privacy">Privacy Policy</a>}
-                {!token && <p className="register-link">Have a Game Over Account?<Link to ="/login" className='register-link'>Sign In</Link></p>}
+                {!regState && registered && <p className='error-msg'>Something went wrong. User Registration failed.</p>}
+                {!regState && registered && <p className='error-msg'></p>}
+                {!regState && registered && <a className="privacy">Privacy Policy</a>}
+                {!regState && registered && <p className="register-link">Have a Game Over Account?<Link to ="/login" className='register-link'>Sign In</Link></p>}
            
             </form>
         </section>

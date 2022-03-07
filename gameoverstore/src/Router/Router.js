@@ -12,9 +12,6 @@ const Router = () => {
       <BrowserRouter>
         <Routes>          
           {token ? PATHS.private.map( (r,index) => <Route {...r} key = {index}/>) : PATHS.noLoggedIn.map( (r,index) => <Route {...r} key = {index}/> )}
-          {/* {PATHS.paths.map( (r,index) => <Route {...r} key = {index}/>) } */}
-          
-          {/* <Route path = "/" element = {<Home/>}></Route> */}
 
           {/* Una vez logueado, nos redirige al HOME */}
           {token && <Route path="/login" element={<Navigate to="/home" replace />} /> } 

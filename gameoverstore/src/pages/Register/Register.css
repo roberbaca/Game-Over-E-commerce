@@ -263,7 +263,18 @@
 
 /* Pantallas extra grandes (desktops de mas de 1400px) */
 @media (max-width: 1440px) { 
+    .site-register {
+        padding-left: 2rem;   
+        padding-right: 2rem;
+        padding-top: 0rem;
+    }
     
+    .form-register {
+        height: 90vh;
+        width: 30vw;
+        padding: 1rem;
+        padding-top: 2rem;   
+    }  
 
 }
 

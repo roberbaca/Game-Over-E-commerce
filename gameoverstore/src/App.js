@@ -1,15 +1,16 @@
 import Router from './Router/Router';
 import { Provider } from 'react-redux';
-import generateStore from './Redux/store';
+import store, {Persistor} from './Redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 function App() {
 
-  const store = generateStore();
-
   return (
     <div className="App">
-      <Provider store={store}>
-        <Router/>
+      <Provider store={store}>    
+        <PersistGate loading={null} persistor={Persistor}>
+          <Router/>        
+        </PersistGate>    
       </Provider>
     </div>
   );

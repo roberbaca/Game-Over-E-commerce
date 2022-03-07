@@ -3,7 +3,7 @@
   FEATURED DEALS
 -----------------*/
     
-.featured-deals {
+/* .featured-deals {
   margin-bottom: 2rem;
 
 }
@@ -55,8 +55,7 @@ h2{
     
     
 .card-small-img {
-  object-fit:cover;
-  /* width: 100%; */
+  object-fit:cover; 
   height: 56%;
 }
     
@@ -134,7 +133,7 @@ h2{
   margin-right: 0.5rem;
 }
     
-
+ */
 
 
 /*----------------
@@ -142,7 +141,7 @@ h2{
 -----------------*/
 
 
-.card-big-img {
+/* .card-big-img {
   object-fit:cover;
   height: 75%;
   padding:0;
@@ -242,25 +241,22 @@ h2{
       
 .addToCart-btn-big i {
   margin-right: 0.5rem;
-}
+} */
      
-    
-
-
-/*----------------
-    PRODUCT LIST
------------------*/
-
+h2{
+  display: flex;
+  justify-content: flex-start;
+  color: white;
+  text-transform: uppercase;
+}    
 
 .product-list {
   display: flex;
   justify-content:left;
   gap: 2.7rem;
   flex-wrap:wrap;
-  margin-bottom: 2rem;
-  
+  margin-bottom: 2rem;  
 }
-
 
 .card {
   width: 18%;
@@ -276,8 +272,7 @@ h2{
 .card-img {
   height: 9rem;
   width: 100%;
-  object-fit: cover;
-  
+  object-fit: cover;  
 }
   
 .card-info {
@@ -289,22 +284,7 @@ h2{
   padding-bottom: 1rem;
   padding-left: 0.4rem;
   padding-right: 0.4rem;
-}  
-   
-/* .card-name {
-  color: white;
-  text-transform: uppercase;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-  padding-bottom: 0.5rem;
-}
-
-.card-genre {
-  color: lightgray;
-  margin: 0;
-} */
- 
+}   
   
 .card-details {
   display: flex;
@@ -312,9 +292,7 @@ h2{
   align-items: center;
   color: white;
   padding-left: 1rem;
-  padding-right: 1rem;
-  
-  
+  padding-right: 1rem;  
 }  
  
 .card-price {
@@ -349,4 +327,80 @@ h2{
 .addToCart-btn i {
   margin-right: 0.5rem;
 }
+
+
+/* ----------------
+    Media Queries
+------------------*/
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (min-width: 1440px) { 
+
+  
+}
+
+
+/* Pantallas extra grandes (desktops de mas de 1400px) */
+@media (max-width: 1440px) { 
+  
+  .product-list { 
+    gap: 2rem; 
+    margin-bottom: 2rem;  
+  }
+
+  .card {
+    width: 23%;
+  }  
+
+}
+
+/* Pantallas grandes (desktops de menos de 1200px) */
+@media (max-width: 1200px) { 
+
+  .product-list { 
+    gap: 2rem; 
+    margin-bottom: 2rem;  
+  }
+
+  .card {
+    width: 30%;
+  }  
+}
+
+
+/* Pantallas medianas (tablets de menos de 992px) */
+@media (max-width: 992px) { 
+  
+  .product-list { 
+    gap: 2rem; 
+    margin-bottom: 2rem;  
+  }
+
+  .card {
+    width: 47%;
+  } 
+
+}
+
+
+/* Pantallas pequeñas (móviles en landscape de menos de 768px) */
+@media (max-width: 768px) { 
+
+}
+
+
+/* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
+@media (max-width: 576px) { 
+
+  .product-list { 
+    gap: 2rem; 
+    margin-bottom: 2rem;  
+  }
+
+  .card {
+    width: 100%;
+  } 
+
+}
+  
   

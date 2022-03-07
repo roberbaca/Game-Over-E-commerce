@@ -194,7 +194,19 @@
 /* Pantallas extra grandes (desktops de mas de 1400px) */
 @media (max-width: 1440px) { 
     
-
+    .site-login {
+        padding-left: 2rem;   
+        padding-right: 2rem;
+        padding-top: 0rem;
+    }
+    
+    .form-login {
+        height: 85vh;
+        width: 40vw;
+        padding: 1rem;
+        padding-top: 1rem;   
+    }   
+    
 }
 
 

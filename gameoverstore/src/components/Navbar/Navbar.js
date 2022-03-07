@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.css'
 import logo from '../../assets/gameOverLogo2.png'
 import { useSelector } from 'react-redux'
@@ -10,16 +10,18 @@ import { useDispatch } from 'react-redux'
 const Navbar = () => {
     
     const token = useSelector(store => store.user.token); 
-    const userInfo = useSelector(store => store.user.userInfo);     
+    const userInfo = useSelector(store => store.user.userInfo);   
+    const [itemCount, setItemCount] = useState(0); 
     const navigate = useNavigate();    
-    const dispatch = useDispatch();     
+    const dispatch = useDispatch();   
 
+    // barra de busqueda
     const handleChangeSearch = (e) => {         
         dispatch(filterActionSearch(e.target.value.toUpperCase()));     
     }
 
-    const handleClick = (e) => {
-  
+    // botones para filtrar el contenido del listado de productos en base a la plataforma (xbox, pc, nintendo, etc)
+    const handleClick = (e) => {  
         switch(e.target.value){
             case "Home":
                 dispatch(filterActionNoFilter());        
@@ -49,19 +51,38 @@ const Navbar = () => {
         navigate('/login');
     }  
 
-    const handleCart = () => {
-        if(localStorage.getItem('cartList' + token) !== null && token !== null ){
-            const cartList = JSON.parse(window.localStorage.getItem('cartList' + token));
-            console.log("El carrito es: ", cartList);
-            navigate('/cart');
 
+    // Al presionar el boton del carrito, chequeamos que el usuario este logueado (buscamos el token)
+    // Si es asi, buscamos un carrito asociado a ese usuario
+    // Si el usuario no esta logueado, lo enviamos a la pagina de login
+    const handleCart = () => {        
+        if(token) {
+            if(localStorage.getItem('cartList' + token) !== null){
+                const cartList = JSON.parse(window.localStorage.getItem('cartList' + token));
+                console.log("El carrito es: ", cartList);
+            }
+            navigate('/cart');             
         } else {
             navigate('/login');            
         }
     }
 
+    // conteo de la cantidad de item en el carrito de compras
+    const countItems = () => {
+        if(token) {
+            if(localStorage.getItem('cartList' + token) !== null){
+                const cartList = JSON.parse(window.localStorage.getItem('cartList' + token));
+                setItemCount(cartList.length);                
+            }
+                      
+        } else {
+            setItemCount(0);            
+        }
+    }
+
     useEffect(() => {
         dispatch( getUserInfoAction( {token} ));
+        countItems();
     }, [token])
 
 
@@ -83,7 +104,7 @@ const Navbar = () => {
             {!token && <button className='login-button' onClick={onLogin}><i className="fas fa-user"></i>LOGIN</button>}
             {token &&  <p className='user'>Welcome,<span>{userInfo.firstName}</span></p>}             
             {token && <button className='login-button' onClick={onLogout}><i className="fas fa-user"></i>LOG OUT</button>}
-            <button className='cart-button' onClick={handleCart}><i className="fas fa-shopping-cart"></i>CART (17)</button>
+            <button className='cart-button' onClick={handleCart}><i className="fas fa-shopping-cart"></i>CART ({itemCount})</button>
             
         </div>                   
     </section>                   
@@ -104,13 +125,7 @@ const Navbar = () => {
                 <div className="search-icon"><i className="fas fa-search"></i></div>
             </div> 
         </div>
-    </section>
- 
-    {/* <section class="site-cover">
-        <div class="site-cover">
-            <img src={coverImg} alt="cover"/>
-        </div>
-    </section> */}   
+    </section> 
 
     </div>
   )

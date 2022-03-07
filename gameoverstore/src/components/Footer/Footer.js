@@ -45,8 +45,6 @@ const Footer = () => {
                         <h3 className="widget-title">My Account</h3>
                         <ul className="no-bullet">
                             <li><Link to ="/login">Login/Register</Link></li>
-
-                            {/* Si el usuario esta logueado, mostrar estos links */}
                             <li><a>Profile</a></li>
                             <li><a>Cart</a></li>                        
                             <li><a onClick={onLogout}>Logout</a></li>

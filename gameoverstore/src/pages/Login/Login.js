@@ -10,7 +10,9 @@ import { loginAction } from '../../Redux/auth';
 const Login = () => {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");   
+    const [password, setPassword] = useState("");       
+    const [logState, setLogState] = useState(false);
+    const [logged, setLogged] = useState(false);
  
 
     const dispatch = useDispatch();
@@ -26,6 +28,8 @@ const Login = () => {
 
     const onLogin = () => {
         dispatch( loginAction( {email, password} ));
+        setLogged(true);
+        setLogState(!error);
     }
 
 
@@ -49,8 +53,8 @@ const Login = () => {
                     </div>
                 </div>
                 <button className="login-btn" type='button' onClick={onLogin}>Log in now</button>
-                {error && <p className='error-msg'>Incorrect email adress or password</p>}
-                {!error && <p className='error-msg'></p>}
+                {!logState && logged && <p className='error-msg'>Incorrect email adress or password</p>}
+                {logState && <p className='error-msg'></p>}
                 <a className="privacy">Privacy Policy</a>            
                 <p className="register-link">Don´t have a Game Over Account?<Link to ="/register" className='register-link'>Sign Up</Link></p>    
                 
