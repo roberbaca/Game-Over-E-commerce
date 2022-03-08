@@ -14,11 +14,11 @@
 <h3 align="center">Game Over Store (e-commerce website)</h3>
 
   <p align="center">
-   Game Over! Play More. Pay Less. It`s an ecommerce website coded with MERN (MongoDB, React JS, Express JS & Node JS)
+   Game Over! Play More. Pay Less. It`s an E-commerce website coded with MERN (MongoDB, React JS, Express JS & Node JS)
     <br />  
     <br />
     <br />
-    <a href="https://freshmarket.vercel.app/" target = "_blank">View Demo</a>  
+    <a href="https://gameover-store.web.app/home" target = "_blank">View Demo</a>  
   </p>
 </div>
 
@@ -31,44 +31,48 @@ Features:
 
 - Frontend: I used React and Redux to manage the different states. The app was deployed to Firebase.
 
-- Backend: I used Express and NodeJS. Decidí usar MongoDB para la base de datos (NoSQL) y mongoose para conectarme. Esta deployado en Heroku.
+- Backend: I used Express and NodeJS. I used MongoDB as a data Base (NoSQL) and mongoose to connect. The dataBase was deployed to Heroku.
 
-- Registro de usuarios para que solo los usuarios logueados puedan comprar en la tienda
+- Only registered users can buy in the shop.
 
-- Validacion de registros con Express Validator
+- Form validator with Express Validator
 
-- Autenticacion usando JSON Web Token
+- Authentication with JSON Web Token
 
-- Cifrado de contraseñas con bcryptjs
+- Hashed passwords with bcryptjs
 
-- ///// Utilice la API RAWG.io para tener acceso a la mayor base de datos de videojuegos
+- CRUD (Create, Read, Update and Delete)
 
-- CRUD (Create, Read, Update and Delete). Posibilidad de agregar, editar, ver o borrar los items de la tienda.
+- Shows the total amount to pay and it updates each time the user adds or deletes an item.
 
-- Muestra el total a pagar del carrito y se actualiza el monto total cuando el usuario agrega o saca productos.
+- Once the checkout is done, the cart is cleared.
 
-- Una vez realizada la compra, se vacia el carrito. 
-
-- Diseño responsive
+- Responsive design.
 
 
 Here’s some screenshots which demonstrates the functionality of the website I created:
 
-![image](https://user-images.githubusercontent.com/83043304/141706488-949127bc-12cc-45e2-ada7-5f4314fc884f.png)
+![screen1](https://user-images.githubusercontent.com/83043304/157146315-51c79522-d6c2-474e-97c2-2874632da05a.png)
 
-![image](https://user-images.githubusercontent.com/83043304/141706325-b3ebbb7a-a604-49e2-9eca-c5ed222ba086.png)
+![screen2](https://user-images.githubusercontent.com/83043304/157146322-bad1af8e-405f-4dde-9b38-fb5752bb7e95.png)
 
-![image](https://user-images.githubusercontent.com/83043304/141706331-9bf68260-461e-4a0e-afaf-3b95d9e11480.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
 
-* HTML
-* CSS
-* JavaScript 
+* ReactJS
+* Redux
+* Router-Dom
+* MongoDB
+* Mongoose
+* NodeJS
+* Express
+* Express Validator
+* bcryptJS
+* JSON web token* 
 * [Fontawesome](https://fontawesome.com/)
-* [Bootstrap](https://getbootstrap.com/)
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -77,7 +81,7 @@ Here’s some screenshots which demonstrates the functionality of the website I 
 
 Roberto Nicolas Baca - roberto.nicolas.baca@gmail.com
 
-Project Link: [https://github.com/roberbaca/ECommerceJS](https://github.com/roberbaca/ECommerceJS)
+Project Link: [https://github.com/roberbaca/Game-Over-E-commerce](https://github.com/roberbaca/Game-Over-E-commerce)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
