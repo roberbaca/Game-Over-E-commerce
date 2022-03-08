@@ -18,7 +18,7 @@
     <br />  
     <br />
     <br />
-    <a href="https://gameover-store.web.app/home" target = "_blank">View Demo</a>  
+    <a href="https://gameover-store.firebaseapp.com/" target = "_blank">View Demo</a>  
   </p>
 </div>
 
