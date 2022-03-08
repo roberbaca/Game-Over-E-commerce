@@ -70,7 +70,9 @@ Here’s some screenshots which demonstrates the functionality of the website I 
 * Express
 * Express Validator
 * bcryptJS
-* JSON web token* 
+* JSON web token
+* Firebase
+* Heroku
 * [Fontawesome](https://fontawesome.com/)
 
 
