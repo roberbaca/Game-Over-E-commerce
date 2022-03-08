@@ -14,7 +14,7 @@
 <h3 align="center">Game Over Store (e-commerce website)</h3>
 
   <p align="center">
-   Game Over! Play More. Pay Less. It`s an ecommerce website coded with MERN (MongoDB, React JS, Express JS & Node JS)
+   Game Over! Play More. Pay Less. It`s an E-commerce website coded with MERN (MongoDB, React JS, Express JS & Node JS)
     <br />  
     <br />
     <br />
