@@ -110,6 +110,7 @@
     padding: 0;
     margin-right: 0.5rem;
 }
+
 .rememberme a{
     font-size: 0.8rem;
     color: white;
@@ -168,8 +169,6 @@
 /* ----------------
     Media Queries
 ------------------*/
-
-
 
 
 /* Pantallas extra grandes (desktops de mas de 1400px) */
@@ -257,5 +256,65 @@
 
 /* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
 @media (max-width: 576px) { 
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
+    .site-login {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .form-login {
+        height: 80vh;
+        width: 90vw;
+        padding: 1rem;
+        padding-top: 3rem;   
+    }  
+
+    .rememberme a{
+        font-size: 0.5rem;       
+    }
+}
+
+@media (max-width: 321px) { 
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
+    .site-login {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .form-login {
+        height: 85vh;
+        width: 100vw;
+        padding: 1rem;
+        padding-top: 3rem;   
+    }   
+
+    .form-login h1 {
+        font-size: 0.7rem;
+    }
+
+    .register-link {
+        font-size: 0.5rem;
+    }
+
 }
     

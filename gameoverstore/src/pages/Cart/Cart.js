@@ -68,7 +68,7 @@ const Cart = () => {
         <div className='cart-container'>
             <div className="shopping-cart-title">
                 <h1>Shopping Cart</h1>
-                <h2>{userCart.length> 0 && userCart.length} Items</h2>
+                <h2 className='item-number'>{userCart.length> 0 && userCart.length} Items</h2>
             </div>
 
             <div className='cards-container'>

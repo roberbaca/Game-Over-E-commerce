@@ -199,5 +199,35 @@
 
 /* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
 @media (max-width: 576px) { 
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .copy {
+    width: 100%; 
+  }
+
+  .widget-links {   
+    display: none;
+  }
+  
+  .widget-newsletter {
+    width: 100%;
+    padding: 0;    
+    flex-direction: row;
+  }
+
+  .widget-newsletter input {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 375px) { 
+ 
+  .copy {
+    width: 100%; 
+    font-size: 0.7rem;
+  }
  
 }

@@ -2,19 +2,16 @@ import React from 'react'
 import './Register.css'
 import logo from '../../assets/gameOverLogo.png'
 import { Link } from "react-router-dom"
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { logoutAction, registerAction } from '../../Redux/auth'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { registerAction } from '../../Redux/auth'
 
 const Register = () => {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [regState, setRegState] = useState(false);
-    const [registered, setRegistered] = useState(false);
-    const error = useSelector(store => store.user.error);
+    const [password, setPassword] = useState("");   
 
     const dispatch = useDispatch();
 
@@ -35,9 +32,7 @@ const Register = () => {
     }   
 
     const onRegister = () => {
-        dispatch( registerAction( {firstName, lastName, email, password} ));
-        setRegistered(true);
-        setRegState(!error);        
+        dispatch( registerAction( {firstName, lastName, email, password} ));                    
     }
 
 
@@ -48,8 +43,7 @@ const Register = () => {
             <form action="" className="form-register">
                 <div className="logo">
                     <img src={logo} alt="logo" className="logo-img"/>               
-                </div>
-                {!regState && 
+                </div>              
                 <div className='form-container'>
                     <h1>Sign Up</h1>
                     <div className="input-names">
@@ -63,20 +57,9 @@ const Register = () => {
                     <input type="text" className="input-email" placeholder="Email Adress" value={email} onChange={handleChangeEmail}/>
                     <input type="password" className="input-password" placeholder="Password" value={password} onChange={handleChangePassword}/>
                     <button className="register-btn" type='button' onClick={onRegister}>Register</button>
-                </div>}
-                {regState && 
-                    <div className='register-success-container'>
-                        <div className='register-success-msg'>
-                            <p>You have signed up succesfully !</p>
-                            <p>Please login to continue.</p>
-                        </div>
-                        <Link className = "register-btn" to ="/login">Login</Link>
-                    </div>
-                }
-                {!regState && registered && <p className='error-msg'>Something went wrong. User Registration failed.</p>}
-                {!regState && registered && <p className='error-msg'></p>}
-                {!regState && registered && <a className="privacy">Privacy Policy</a>}
-                {!regState && registered && <p className="register-link">Have a Game Over Account?<Link to ="/login" className='register-link'>Sign In</Link></p>}
+                </div>       
+                 <a className="privacy">Privacy Policy</a>
+                 <p className="register-link">Have a Game Over Account?<Link to ="/login" className='register-link'>Sign In</Link></p>
            
             </form>
         </section>

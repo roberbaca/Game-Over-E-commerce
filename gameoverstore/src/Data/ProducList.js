@@ -53,7 +53,7 @@ const productList = [
 
   {
     id: 5,
-    name: "Teenage Mutant Ninja Turtles: Shredder's Revenge",
+    name: "TMNT: Shredder's Revenge",
     platform: "PC",
     description: "Teenage Mutant Ninja Turtles: Shredder’s Revenge reunites Leonardo, Michelangelo, Donatello and Raphael as they kick shell in a beautifully realized beat ’em up.",
     genre: "Beat ’em up",

@@ -31,16 +31,15 @@ export default function AuthReducer(state = defaultValue, { type, payload }) {
 export const loginAction = ( {email, password} ) => async dispatch => {
     try {
         const response = await axiosInstance.post('/login', { email, password });  // llamada al back y obtenemos el token       
-        const token = response.data.token;      
-        
-        window.localStorage.setItem("token", JSON.stringify(token));
-        
-        console.log(token);
+        const token = response.data.token;              
+        window.localStorage.setItem("token", JSON.stringify(token));        
+        //console.log(token);
         dispatch({ type: LOGIN, payload: token });
         
 
     } catch(error) {
-        console.log("error: ", error);
+        //console.log("error: ", error);
+        alert("Incorrect email or password");
         dispatch({ type: ERROR });
     }      
 }
@@ -53,12 +52,14 @@ export const logoutAction = () => dispatch => {
 export const registerAction = ( {firstName, lastName, email, password} ) => async dispatch => {
     try {
         const response = await axiosInstance.post('/register', { firstName, lastName, email, password });              
-        console.log("register succesful: ");
+        //console.log("register succesful");
         const registered = true;
+        alert("Register succesful. Please Login with your account.");
         dispatch({ type: REGISTER, payload: registered });        
 
     } catch(error) {
-        console.log("error: ", error);
+        //console.log("error: ", error);
+        alert("Something went wrong. Please try again");
         dispatch({ type: ERROR });
     }      
 }
@@ -79,7 +80,7 @@ export const getUserInfoAction = ( {token} ) => async dispatch => {
                 email: response.data.email
             }
     
-            console.log(response.data);
+            //console.log(response.data);
             dispatch({ type: GET_USER_INFO, payload: userInfo });        
         }
 

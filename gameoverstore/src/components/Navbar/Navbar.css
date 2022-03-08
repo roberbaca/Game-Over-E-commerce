@@ -2,17 +2,12 @@
     --lightBlue: #1FD4DD;
     --black:#2b2b2b;
     --grey: #898e90;
-    --darkGrey: rgba(53,60,76);
-  
-      --green:#27ae60;
-  
-  
-  
-      --white:#fff;
-    
-      --orange: #f1a026;
-      --lightGrey: #f7f7f7;
-      --brownish:  #999;   
+    --darkGrey: rgba(53,60,76);  
+    --green:#27ae60;  
+    --white:#fff;    
+    --orange: #f1a026;
+    --lightGrey: #f7f7f7;
+    --brownish:  #999;   
   }
   
   .fa-home {
@@ -27,15 +22,6 @@
     background-color: var(--black);
   }
   
-.header-navbar {
-  /* position: fixed;
-  width: 100%;
-  background-color: var(--black);
-  margin: 0;
-  top: 0;
-  padding-top: 2rem; */
-}
-
 
   /*------------
        HEADER
@@ -43,8 +29,7 @@
   
   .site-header {
     margin-bottom: 1rem;
-    display: flex;  
-    /* position: fixed; */
+    display: flex;    
   }
   
   .logo-container{
@@ -89,8 +74,7 @@
     border: 0.1rem solid var(--lightBlue);
     text-decoration: none;
     color: var(--black);
-    font-size: 0.8rem;
-    /* padding: 0.1rem; */
+    font-size: 0.8rem;  
     width: 20%;
     display: flex;
     justify-content: center;
@@ -117,8 +101,7 @@
     border: 0.1rem solid var(--lightBlue);
     text-decoration: none;
     color: var(--black);
-    font-size: 0.8rem;
-    /* padding: 0.1rem; */
+    font-size: 0.8rem;  
     margin-left: 1rem;
     width: 20%;
     display: flex;
@@ -163,8 +146,7 @@
   .site-navbar {
     background-color: var(--black);
     margin-bottom: 2rem;
-    padding: 0;
-    /* position: fixed; */
+    padding: 0;   
   }
   
   .main-navigation {
@@ -265,22 +247,9 @@
   
   .search-form input[type="text"]:hover, .search-form input[type="text"]:focus {
     border-color: var(--lightBlue);
-  }
+  }  
   
-  
-  
-  /*------------
-       COVER
-  -------------*/
-  
-  /* .site-cover {
-    background-color: var(--black);
-    margin-bottom: 4rem;
-  }
-  
-  .site-cover img {
-    width: 100%;
-  } */
+
   
 /* ----------------
     Media Queries
@@ -350,6 +319,88 @@
 
 /* Pantallas muy pequeñas (móviles en portrait de menos de 576px) */
 @media (max-width: 576px) { 
+  .logo-container img{
+    width: 6rem;
+    margin-right: 1rem;
+  }
 
+  .login-button {
+    font-size: 0.8rem;
+    width: 100%;
+    height: 4rem; 
+  }
+ 
+  .cart-button {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+    width: 100%;
+    height: 4rem;
+  }
+
+  .main-navigation {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .menu { 
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 10rem;    
+  }  
+
+  .menu-item {
+    width: 100%;
+  }
+
+  .search-form {
+    width: 100%;   
+  }    
+  
+  .search-icon {
+    display: none; 
+  }  
+
+  .site-header {
+    margin-bottom: 1rem;
+    display: flex;    
+    flex-direction: column;
+  }
+  
+  .logo-container{
+    width: 50%;
+    display: flex;
+    margin-bottom: 2rem;
+  }
+  
+  .login-section {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items:flex-end;
+  }
+  
+  .logo-container img{ 
+    display: none;
+  }
+  
+  .site-title {    
+    display: none;   
+  }
+  
+
+  .site-description {     
+    display: none; 
+  }
+
+  .search-input {
+    font-size: 0.5rem;
+  }
+  
+  .user {
+    display: none;
+  }
 }
   
